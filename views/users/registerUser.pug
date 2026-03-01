@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+
+    div.content-form
+        div.form-header Register as a User
+        div
+            form.register(action="#" method="post")
+                div.input-container
+                    label(for="first_name").form-label First Name:
+                    input(type="text" name="first_name" id="first_name" required=true).form-control
+                div.input-container
+                    label(for="last_name").form-label Last Name:
+                    input(type="text" name="last_name" id="last_name" required=true).form-control
+                div.input-container
+                    label(for="student_id").form-label Student ID:
+                    input(type="text" name="student_id" id="student_id" required=true).form-control
+                div.input-container
+                    label(for="student_grade").form-label Student Grade Level:
+                    input(type="text" name="student_grade" id="student_grade" required=true).form-control
+                div.input-container
+                    label(for="school_email").form-label School Email:
+                    input(type="text" name="school_email" id="school_email" required=true).form-control
+                div.input-container
+                    label(for="password").form-label Password:
+                    input(type="text" name="password" id="password" required=true).form-control
+
+                div.form-button-row
+                    button.button.primary(type="submit") Register

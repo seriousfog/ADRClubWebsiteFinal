@@ -1,0 +1,22 @@
+mixin event(clubevent)
+    h2.event-name#calPopEvent=clubevent.eventtitle
+        div.popup-overlay#popupOverlayEvent
+            div.popup#popupEvent
+                span.close#closePopupEvent &times;
+                div.popup-content
+                    a.button-cancel(href=`/clubs/${club.id}/event/delete`) Remove Event
+                    div.club-event-info
+                        div.event-details
+                            h2 Name:
+                            p=clubevent.eventtitle
+                        div.event-details
+                            h4 Location:
+                            p=clubevent.eventlocation
+                        div.event-details
+                            h4 Time:
+                            p=clubevent.eventstart
+                            |
+                            p=clubevent.eventend
+                        div.event-details
+                            h4.info-event Information:
+                            p=clubevent.eventdescription

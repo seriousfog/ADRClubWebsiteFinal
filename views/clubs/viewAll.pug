@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+    include ../mixins/clubCard
+    .main-content
+        h1 Welcome to Edison's Club Directory!
+        p Explore all the student organizations on campus.
+
+        .search-bar
+            form(action="/search", method="GET")
+                input(type="text", name="q", placeholder="Search clubs...", value=searchQuery)
+                button(type="submit") Search
+
+        .clubs-container
+            each club in clubs
+                +clubCard(club)
+
+    // Modal Overlay (hidden by default)
+    #modal-overlay.modal-overlay(style="display: none;")
+
+    // Modal (hidden by default)
+    #club-modal.modal(style="display: none;")
+        .modal-banner
+            img#modal-banner(src='/images/Edison.png', alt='Club Banner')
+        .modal-content
+            span#close-btn &times;
+            h2#modal-name Club Name
+            p#modal-shortdesc Description
+            p#modal-location Location:
+            p#modal-meeting Meeting:
+            p#modal-commitment Commitment:
+            p#modal-advisor Advisor:
+            p#modal-officers Officers:
+            a#modal-more(href="/clubs/") More Info →
+
+    // Pass club data to JavaScript (ONLY ONCE, at the bottom)
+    script.
+        window.clubsData = !{JSON.stringify(clubs).replace(/</g, '\\u003c')};

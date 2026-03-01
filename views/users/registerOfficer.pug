@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+
+    div.content-form
+        div.form-header Register as an Officer
+        div
+            form.register(action="#" method="post")
+                div.input-container
+                    label(for="off_first_name").form-label First Name:
+                    input(type="text" name="off_first_name" id="off_first_name" required=true).form-control
+                div.input-container
+                    label(for="off_last_name").form-label Last Name:
+                    input(type="text" name="off_last_name" id="off_last_name" required=true).form-control
+                div.input-container
+                    label(for="student_id").form-label Student ID:
+                    input(type="text" name="student_id" id="student_id" required=true).form-control
+                div.input-container
+                    label(for="student_grade").form-label Student Grade Level:
+                    input(type="text" name="student_grade" id="student_grade" required=true).form-control
+                div.input-container
+                    label(for="school_email").form-label School Email:
+                    input(type="text" name="school_email" id="school_email" required=true).form-control
+                div.input-container
+                    label(for="password").form-label Password:
+                    input(type="text" name="password" id="password" required=true).form-control
+                div.input-container
+                    label(for="club").form-label Name of Club You Belong To:
+                    input(type="text" name="club" id="club" required=true).form-control
+                div.input-container
+                    label(for="officer_position").form-label Select Officer Position:
+                    select(name="officer_position" id="officer_position" required=true).form-control
+                        option(value="")
+                        option(value="president") President
+                        option(value="vice_president") Vice President
+                        option(value="secretary") Secretary
+                        option(value="treasurer") Treasurer
+                        option(value="historian") Historian
+
+                div.form-button-row
+                    button.button.primary(type="submit") Register

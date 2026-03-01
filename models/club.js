@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
                 });
             }
             Club.hasMany(models.ClubEvent, {
-                as: 'clubevent',
+                as: 'events',
                 foreignKey: 'club_id'
             });
         }

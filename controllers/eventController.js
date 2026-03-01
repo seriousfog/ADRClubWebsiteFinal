@@ -8,6 +8,7 @@ module.exports.createEvent = async function (req, res){
         eventdate: req.body.eventdate,
         eventstart: req.body.eventstart,
         eventend: req.body.eventend,
+        eventlocation: req.body.eventlocation,
         club_id: clubId
     });
     res.redirect(`/clubs/${clubId}`);

@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+
+    div.content-form
+        div.form-header Login
+        div
+            form.register(action="/login" method="POST")
+                div.input-container
+                    label(for="school_email") School Email Address:
+                    input(type="text" name="school_email" id="school_email" required=true)
+                div.input-container
+                    label(for="password") Password:
+                    input(type="text" name="password" id="password" required=true)
+                button.button(type="submit") Login

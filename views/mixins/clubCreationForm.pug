@@ -1,9 +1,4 @@
-extends ../layout
-
-block content
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-
-
+mixin clubCreationForm(club, saveUrl, cancelUrl, deleteUrl)
     form(action="#" method="post" enctype="multipart/form-data")
         div.club-content1
             div.clubname1
@@ -98,5 +93,7 @@ block content
                             div.border21
 
             div.club-create-form-button
-                a.button-cancel(href='/') Cancel
+                a.button-cancel(href=cancelUrl) Cancel
+                if(deleteUrl)
+                    a.button-cancel(href=deleteUrl) Delete
                 button.button.primary(type="submit") Add New Club

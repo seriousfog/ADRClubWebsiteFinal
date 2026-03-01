@@ -1,0 +1,17 @@
+mixin clubCard(club)
+
+    .club-card(data-id=club.id)
+        .card-logo
+            img(
+                src=club.logo || '/images/logo-placeholder.png',
+                alt=`${club.name} Logo`,
+                onerror="this.src='/images/Edison.png';"
+            )
+        .card-info
+            h2= club.name
+            p Location: #{club.location || 'TBD'}
+            p Meeting: #{club.meeting}
+            p.short= club.shortDesc
+            p Commitment: #{club.commitment || 'TBD'}
+            p Advisor: #{club.advisor || 'TBD'}
+            p Officers: #{club.officers || 'TBD'}

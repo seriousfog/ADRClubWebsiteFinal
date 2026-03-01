@@ -1,0 +1,6 @@
+extends ../layout
+
+block content
+    include ../mixins/clubCreationForm
+    div.content
+        +clubCreationForm(club, 'Update', `/club/${club.id}/edit`, `/club/${club.id}`, `/club/${club.id}/delete`)
