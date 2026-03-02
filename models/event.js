@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       ClubEvent.belongsTo(models.Club, {
         foreignKey: 'club_id',
+        as: 'club'
       });
     }
   }

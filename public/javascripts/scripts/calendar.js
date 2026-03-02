@@ -1,6 +1,18 @@
 
 //Calendar Events
 document.addEventListener('DOMContentLoaded', function () {
+    const events = window.eventsData || [];
+
+    // If no data, something went wrong
+    if (events.length === 0) {
+        console.error('No event data found!');
+        return;
+    }
+
+    console.log('Events loaded:', events); // Debug: check if data is loaded
+
+    const eventcards = document.querySelectorAll('.event-card');
+
     const popupOverlay = document.getElementById('popupOverlay');
     const closePopup = document.getElementById('closePopup');
     const calPop = document.getElementById('calPop');
@@ -32,6 +44,36 @@ document.addEventListener('DOMContentLoaded', function () {
             closePopupFunc();
         }
     });
+
+/*
+    // OPEN MODAL
+    eventcards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Get the club ID from the card's data attribute
+            const eventId = card.dataset.id;
+            console.log('Clicked card with ID:', eventId); // Debug
+
+            // Find the matching club in our data
+            const event = events.find(c => c.id == eventId);
+
+
+            if (!event) {
+                console.error(`Event with id "${eventId}" not found in:`, events);
+                return;
+            }
+
+            console.log('Found event:', event); // Debug
+
+
+            // Show modal and overlay
+            popupOverlay2.style.display = 'block';
+
+
+        });
+    });
+
+
+ */
 
 
     // Function to open the popup

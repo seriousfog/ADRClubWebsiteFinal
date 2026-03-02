@@ -1,5 +1,6 @@
-mixin event(clubevent)
-    h2.event-name#calPopEvent=clubevent.eventtitle
+mixin clubEvent(event)
+    .event-card(data-id=event.id)
+        h2.event-name#calPopEvent=event.eventtitle
         div.popup-overlay#popupOverlayEvent
             div.popup#popupEvent
                 span.close#closePopupEvent &times;
@@ -8,15 +9,16 @@ mixin event(clubevent)
                     div.club-event-info
                         div.event-details
                             h2 Name:
-                            p=clubevent.eventtitle
+                            p=event.eventtitle
                         div.event-details
                             h4 Location:
-                            p=clubevent.eventlocation
+                            p=event.eventlocation
                         div.event-details
                             h4 Time:
-                            p=clubevent.eventstart
+                            p=event.eventstart
                             |
-                            p=clubevent.eventend
+                            p=event.eventend
                         div.event-details
                             h4.info-event Information:
-                            p=clubevent.eventdescription
+                            p=event.eventdescription
+

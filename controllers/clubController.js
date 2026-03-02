@@ -55,7 +55,7 @@ module.exports.addClub = async function(req, res){
 module.exports.displayClub = async function(req, res, next) {
     try {
         const club = await Club.findByPk(req.params.clubId, {
-            include: [{ model: Officer, required: false }, {model: ClubEvent, as: 'events'}]
+            include: [{ model: Officer, required: false }, {model: ClubEvent, as: 'clubevents'}]
         });
 
         if (!club) {
@@ -65,24 +65,28 @@ module.exports.displayClub = async function(req, res, next) {
             });
         }
 
+        // Convert to plain object to ensure associations are accessible
+        const clubPlain = club.get({ plain: true });
+
         const officersList = club.Officers && club.Officers.length > 0
             ? club.Officers.map(o => `${o.officertitle}: ${o.officerfirstname} ${o.officerlastname}`).join(', ')
             : 'No officers listed';
 
         const formattedClub = {
-            id: club.id,
-            name: club.clubname,
-            meeting: club.meetingdate,
-            location: club.clubroomnumber,
-            shortDesc: club.smalldescription,
+            id: clubPlain.id,
+            name: clubPlain.clubname,
+            meeting: clubPlain.meetingdate,
+            location: clubPlain.clubroomnumber,
+            shortDesc: clubPlain.smalldescription,
             commitment: 'TBD',
-            advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
-            secondAdvisor: club.secondadvisorfirstname ?
-                `${club.secondadvisorfirstname} ${club.secondadvisorlastname || ''}`.trim() : null,
+            advisor: `${clubPlain.advisorfirstname || ''} ${clubPlain.advisorlastname || ''}`.trim(),
+            secondAdvisor: clubPlain.secondadvisorfirstname ?
+                `${clubPlain.secondadvisorfirstname} ${clubPlain.secondadvisorlastname || ''}`.trim() : null,
             officers: officersList,
-            banner: club.clublogo || '/images/placeholder-banner.png',
-            logo: club.clublogo || '/images/placeholder-logo.png',
-            category: club.category
+            banner: clubPlain.clublogo || '/images/placeholder-banner.png',
+            logo: clubPlain.clublogo || '/images/placeholder-logo.png',
+            category: clubPlain.category,
+            clubevents: clubPlain.clubevents || []
         };
 
         res.render('clubs/club', {

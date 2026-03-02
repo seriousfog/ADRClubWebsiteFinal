@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
                     sourceKey: 'clubname'
                 });
             }
+
             Club.hasMany(models.ClubEvent, {
-                as: 'events',
+                as: 'clubevents',
                 foreignKey: 'club_id'
             });
         }
