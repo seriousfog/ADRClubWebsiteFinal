@@ -1,6 +1,7 @@
 
 //Calendar Events
 document.addEventListener('DOMContentLoaded', function () {
+    /*
     const events = window.eventsData || [];
 
     // If no data, something went wrong
@@ -12,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Events loaded:', events); // Debug: check if data is loaded
 
     const eventcards = document.querySelectorAll('.event-card');
+
+     */
 
     const popupOverlay = document.getElementById('popupOverlay');
     const closePopup = document.getElementById('closePopup');

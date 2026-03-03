@@ -12,6 +12,10 @@ block content
                 input(type="text", name="clubname", value=club.clubname, required)
 
             .input-container
+                label.form-label Club Logo:
+                input(type="text", name="clublogo", value=club.clublogo)
+
+            .input-container
                 label.form-label Advisor First Name:
                 input(type="text", name="advisorfirstname", value=club.advisorfirstname)
 
@@ -41,8 +45,19 @@ block content
                     option(value="STEM", selected=club.category==='STEM') STEM
 
             .input-container
+                label.form-label Commitment:
+                select(name="commitment")
+                    option(value="Low", selected=club.commitment==='Low') Low
+                    option(value="Medium", selected=club.commitment==='Medium') Medium
+                    option(value="High", selected=club.commitment==='High') High
+
+            .input-container
                 label.form-label Short Description:
                 textarea(name="smalldescription", rows="3")= club.smalldescription
+
+            .input-container
+                label.form-label Unique Description:
+                textarea(name="uniquedescription", rows="3")= club.uniquedescription
 
             .club-create-form-button
                 button(type="submit") Save Changes

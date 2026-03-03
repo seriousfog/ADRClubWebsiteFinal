@@ -15,6 +15,10 @@ block content
                 input(type="text", name="clubname", required)
 
             .input-container
+                label.form-label Club Logo:
+                input(type="text", name="clublogo")
+
+            .input-container
                 label.form-label Advisor First Name:
                 input(type="text", name="advisorfirstname")
 
@@ -44,12 +48,20 @@ block content
                     option(value="STEM") STEM
 
             .input-container
+                label.form-label Commitment:
+                select(name="commitment")
+                    option(value="Low") Low
+                    option(value="Medium") Medium
+                    option(value="High") High
+
+            .input-container
                 label.form-label Short Description:
                 textarea(name="smalldescription", rows="3")
 
             .input-container
-                label.form-label Logo URL:
-                input(type="text", name="clublogo", placeholder="placeholder.jpg")
+                label.form-label Unique Description:
+                textarea(name="uniquedescription", rows="3")
+
 
             .club-create-form-button
                 button(type="submit") Create Club

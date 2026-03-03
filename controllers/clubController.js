@@ -1,4 +1,4 @@
-const {Club, Officer, ClubEvent} = require('../models');
+const {Club, Officer, ClubEvent, News} = require('../models');
 
 
 module.exports.renderAddClubForm = function(req, res){
@@ -11,10 +11,12 @@ module.exports.renderAddClubForm = function(req, res){
         category: '',
         clublogo: '',
         smalldescription: '',
+        uniquedescription: '',
+        commitment: '',
         secondadivsorfirstname: '',
         secondadivsorlastname: '',
     };
-    res.render('clubs/addClub', {club});
+    res.render('club-create', {club});
 };
 
 module.exports.addClub = async function(req, res){
@@ -31,6 +33,8 @@ module.exports.addClub = async function(req, res){
             clubroomnumber: req.body.clubroomnumber,
             category: req.body.category,
             smalldescription: req.body.smalldescription,
+            uniquedescription: req.body.uniquedescription,
+            commitment: req.body.commitment,
             clublogo: req.body.clublogo || 'placeholder.jpg'
         });
 
@@ -44,7 +48,7 @@ module.exports.addClub = async function(req, res){
             console.error('Validation errors:', error.errors.map(e => e.message));
         }
 
-        res.render('clubCreationForm', {
+        res.render('club-create', {
             title: 'Create New Club',
             error: 'Failed to create club: ' + error.message,
             formData: req.body // Send back the form data so user doesn't lose it
@@ -55,7 +59,7 @@ module.exports.addClub = async function(req, res){
 module.exports.displayClub = async function(req, res, next) {
     try {
         const club = await Club.findByPk(req.params.clubId, {
-            include: [{ model: Officer, required: false }, {model: ClubEvent, as: 'clubevents'}]
+            include: [{ model: Officer, required: false }, {model: ClubEvent, as: 'clubevents'}, {model: News, as: 'clubnews'}]
         });
 
         if (!club) {
@@ -78,7 +82,9 @@ module.exports.displayClub = async function(req, res, next) {
             meeting: clubPlain.meetingdate,
             location: clubPlain.clubroomnumber,
             shortDesc: clubPlain.smalldescription,
-            commitment: 'TBD',
+
+            commitment: clubPlain.commitment,
+            uniqueDesc: clubPlain.uniquedescription,
             advisor: `${clubPlain.advisorfirstname || ''} ${clubPlain.advisorlastname || ''}`.trim(),
             secondAdvisor: clubPlain.secondadvisorfirstname ?
                 `${clubPlain.secondadvisorfirstname} ${clubPlain.secondadvisorlastname || ''}`.trim() : null,
@@ -86,7 +92,8 @@ module.exports.displayClub = async function(req, res, next) {
             banner: clubPlain.clublogo || '/images/placeholder-banner.png',
             logo: clubPlain.clublogo || '/images/placeholder-logo.png',
             category: clubPlain.category,
-            clubevents: clubPlain.clubevents || []
+            clubevents: clubPlain.clubevents || [],
+            clubnews: clubPlain.clubnews || []
         };
 
         res.render('clubs/club', {
@@ -120,7 +127,9 @@ module.exports.updateClub = async function(req, res) {
             meetingdate: req.body.meetingdate,
             clubroomnumber: req.body.clubroomnumber,
             category: req.body.category,
-            smalldescription: req.body.smalldescription
+            smalldescription: req.body.smalldescription,
+            uniquedescription: req.body.uniquedescription,
+            commitment: req.body.commitment
         }, {
             where: { id: req.params.id }
         });
@@ -151,7 +160,8 @@ module.exports.displayAll = async function(req, res, next) {
             meeting: club.meetingdate,
             location: club.clubroomnumber,
             shortDesc: club.smalldescription,
-            commitment: 'TBD',
+            commitment: club.commitment,
+            uniqueDesc: club.uniquedescription,
             advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
             officers: 'See details page',
             banner: club.clublogo || '/images/placeholder-banner.png',

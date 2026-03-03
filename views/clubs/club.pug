@@ -96,32 +96,19 @@ block content
                         h2.formShow#formShow +
                         h2.formHide#formHide -
                     div.formNews#formNews
-                        form.news(action="#" method="post")
+                        form.news(action=`/clubs/${club.id}/news/create` method="post")
                             div.input-container
-                                label(for="news_name").form-label Title of News:
-                                input(type="text" name="news_name" id="news_name" required=true)
+                                label(for="news_title").form-label Title of News:
+                                input(type="text" name="news_title" id="news_title" required=true)
                             div.input-container
                                 label(for="news_info").form-label
                                 textarea(name="news_info" id="news_info" placeholder="News Info..." required=true)
                             div.form-button-row
                                 button.button(type="submit") Add News
-                    div.news-content
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
-                        p Ora ora ora?
+                    div.club-news-list
+                        each news in (club.clubnews|| [])
+                            +clubNews(news)
+
         .club-info-sections
             .club-info-block
                 h3 What is this Activity?
