@@ -228,6 +228,7 @@ button.club-card {
 
 button {
   padding: 10px;
+  margin: 5px;
 }
 
 textarea {
@@ -814,9 +815,10 @@ nav.main-nav a:hover {
 
 .club-news-info {
   padding: 15px;
-  height: 100%;
+  height: 80%;
   overflow-y: auto;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .club-news-heading{
@@ -824,8 +826,26 @@ nav.main-nav a:hover {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  margin: 10px 15px 10px 15px;
 }
 
+.club-news-isolator {
+  padding: 5px;
+  margin: 2px;
+  border-top: 1px solid #ddd;
+}
+
+
+.news-info-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.club-news-list {
+}
 
 /* Club Events*/
 
@@ -1237,6 +1257,8 @@ body1 {
   width: 50%;
   height: 500px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -1247,10 +1269,14 @@ body1 {
 
 .formShow{
   display: block;
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px 1px;
+  padding: 2px;
 }
 
 .formHide{
   display: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px 1px;
+  padding: 2px;
 }
 
 .formNews2{

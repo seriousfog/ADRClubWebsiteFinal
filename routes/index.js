@@ -148,10 +148,13 @@ router.get('/clubs/:id/delete', clubController.deleteClub);
 // POST new club event
 router.post('/clubs/:clubId/event/create', eventController.createEvent);
 
-// GET delete club
-router.get('/clubs/:id/event/delete', eventController.deleteEvent);
+// GET delete club event
+router.get('/clubs/:clubId/event/delete', eventController.deleteEvent);
 
 // POST new club news
 router.post('/clubs/:clubId/news/create', newsController.createNews);
+
+//GET delete club news
+router.get('/clubs/:clubId/news/delete', newsController.deleteNews);
 
 module.exports = router;

@@ -59,7 +59,10 @@ module.exports.addClub = async function(req, res){
 module.exports.displayClub = async function(req, res, next) {
     try {
         const club = await Club.findByPk(req.params.clubId, {
-            include: [{ model: Officer, required: false }, {model: ClubEvent, as: 'clubevents'}, {model: News, as: 'clubnews'}]
+            include: [{ model: Officer, required: false }, {model: ClubEvent, as: 'clubevents'}, {model: News, as: 'clubnews'}],
+            order: [
+                ['clubnews', 'news_on']
+            ]
         });
 
         if (!club) {

@@ -1,4 +1,5 @@
 'use strict';
+const moment = require('moment');
 const {
   Model
 } = require('sequelize');
@@ -20,7 +21,17 @@ module.exports = (sequelize, DataTypes) => {
   News.init({
     news_title: DataTypes.STRING,
     news_info: DataTypes.STRING,
-    club_id: DataTypes.BIGINT
+    club_id: DataTypes.BIGINT,
+    news_on: DataTypes.DATE,
+    newsDatedAgo: {
+      type: DataTypes.VIRTUAL,
+      get(){
+        let newsOn = moment(this.news_on);
+        let now = moment();
+        return moment.duration(newsOn.diff(now)).humanize(true);
+      }
+    }
+
   }, {
     sequelize,
     modelName: 'News',

@@ -2,6 +2,7 @@ extends ../layout
 
 block content
     include ../mixins/clubEvent
+    include ../mixins/clubNews
     .club-detail-page
 
         .club-detail-header
@@ -90,23 +91,24 @@ block content
 
 
             div.club-news
+                div.club-news-heading
+                    h2 Club News
+                    h2.formShow#formShow +
+                    h2.formHide#formHide -
+                div.formNews#formNews
+                    form.news(action=`/clubs/${club.id}/news/create` method="post")
+                        div.input-container
+                            label(for="news_title").form-label Title of News:
+                            input(type="text" name="news_title" id="news_title" required=true)
+                        div.input-container
+                            label(for="news_info").form-label
+                            textarea(name="news_info" id="news_info" placeholder="News Info..." required=true)
+                        div.form-button-row
+                            button.button(type="submit") Add News
                 div.club-news-info
-                    div.club-news-heading
-                        h2 Club News
-                        h2.formShow#formShow +
-                        h2.formHide#formHide -
-                    div.formNews#formNews
-                        form.news(action=`/clubs/${club.id}/news/create` method="post")
-                            div.input-container
-                                label(for="news_title").form-label Title of News:
-                                input(type="text" name="news_title" id="news_title" required=true)
-                            div.input-container
-                                label(for="news_info").form-label
-                                textarea(name="news_info" id="news_info" placeholder="News Info..." required=true)
-                            div.form-button-row
-                                button.button(type="submit") Add News
+
                     div.club-news-list
-                        each news in (club.clubnews|| [])
+                        each news in (club.clubnews || [])
                             +clubNews(news)
 
         .club-info-sections
