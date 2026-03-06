@@ -185,8 +185,8 @@ button.club-card {
   flex-direction: row;
   justify-content: center;
   max-width: 1200px;
-  margin: 20px;
-  padding: 10px;
+  margin: 40px auto;
+  padding: 30px;
 }
 
 .club-meet {
@@ -1250,8 +1250,6 @@ body1 {
 /* ============================================ */
 .club-news {
   background-color: #ffffff;
-  margin-top: 100px;
-  margin-bottom: -200px;
   margin-left: 100px;
   box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px 1px;
   width: 50%;

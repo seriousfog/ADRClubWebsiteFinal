@@ -1,6 +1,6 @@
 const {News} = require('../models');
 
-module.exports.createNews = async function (req, res){
+module.exports.createNews = async function (req, res) {
     let clubId = req.params.clubId;
     await News.create({
         news_title: req.body.news_title,
@@ -13,9 +13,10 @@ module.exports.createNews = async function (req, res){
 
 module.exports.deleteNews = async function (req, res){
     let clubId = req.params.clubId;
+    let newsId = req.params.newsId;
     await News.destroy({
         where: {
-            id: req.params.newsId
+            id: newsId
         }
     });
     res.redirect(`/clubs/${clubId}`);
