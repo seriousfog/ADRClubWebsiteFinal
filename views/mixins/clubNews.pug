@@ -1,8 +1,11 @@
 mixin clubNews(news)
-    div.club-news-isolator
-        div.news-info-header
-            h3=news.news_title
-            p(style="font-style: italic")=news.newsDatedAgo
-            a.button-cancel(href=`/clubs/${club.id}/news/delete`) Remove News
-        div.news-content
-            p=news.news_info
+    if news.is_deleted
+
+    else
+        div.club-news-isolator
+            div.news-info-header
+                h3=news.news_title
+                p(style="font-style: italic")=news.newsDatedAgo
+                a.button-cancel(href=`/clubs/${club.id}/news/delete`) Remove News
+            div.news-content
+                p=news.news_info
