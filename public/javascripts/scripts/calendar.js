@@ -1,29 +1,26 @@
-
 //Calendar Events
+
+//Open Events Form
 document.addEventListener('DOMContentLoaded', function () {
-    /*
-    const events = window.eventsData || [];
-
-    // If no data, something went wrong
-    if (events.length === 0) {
-        console.error('No event data found!');
-        return;
-    }
-
-    console.log('Events loaded:', events); // Debug: check if data is loaded
-
-    const eventcards = document.querySelectorAll('.event-card');
-
-     */
 
     const popupOverlay = document.getElementById('popupOverlay');
     const closePopup = document.getElementById('closePopup');
     const calPop = document.getElementById('calPop');
 
+    const  eventForm = document.querySelector('form.eventForm');
 
-    const popupOverlay2 = document.getElementById('popupOverlayEvent');
-    const closePopup2 = document.getElementById('closePopupEvent');
-    const calPop2 = document.getElementById('calPopEvent');
+    if (eventForm) {
+        eventForm.addEventListener('submit', function (e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+
+            // If the button is already disabled, stop the submission
+            if (submitBtn.disabled) {
+                e.preventDefault();
+            }
+
+            submitBtn.disabled = true;
+        });
+    }
 
 
     // Function to open the popup
@@ -48,59 +45,54 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-/*
-    // OPEN MODAL
+});
+
+
+
+// Popup Event Card
+document.addEventListener('DOMContentLoaded', function () {
+    const events = window.eventsData || [];
+
+    // If no data, something went wrong
+    if (events.length === 0) {
+        console.error('No event data found!');
+        return;
+    }
+
+    console.log('Events loaded:', events); // Debug: check if data is loaded
+
+
+    const eventcards = document.querySelectorAll('.event-card');
+
+
     eventcards.forEach(card => {
-        card.addEventListener('click', () => {
-            // Get the club ID from the card's data attribute
-            const eventId = card.dataset.id;
-            console.log('Clicked card with ID:', eventId); // Debug
+        // Find the elements specific to THIS card
+        const overlay = card.querySelector('.popupOverlayEvent');
+        const closeBtn = card.querySelector('.closePopupEvent');
 
-            // Find the matching club in our data
-            const event = events.find(c => c.id == eventId);
+        // OPEN: Clicking the card opens its specific overlay
+        card.addEventListener('click', (e) => {
+            // Stop the click from triggering if we clicked the "Remove" button
+            if (e.target.classList.contains('button-cancel')) return;
 
+            overlay.style.display = 'block';
+        });
 
-            if (!event) {
-                console.error(`Event with id "${eventId}" not found in:`, events);
-                return;
+        // CLOSE: Clicking the 'x' inside this specific card
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevents the card click from re-opening it
+            overlay.style.display = 'none';
+        });
+
+        // CLOSE: Clicking outside the content (on the overlay)
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                e.stopPropagation();
+                overlay.style.display = 'none';
             }
-
-            console.log('Found event:', event); // Debug
-
-
-            // Show modal and overlay
-            popupOverlay2.style.display = 'block';
-
-
         });
     });
-
-
- */
-
-
-    // Function to open the popup
-    function openPopup2() {
-        popupOverlay2.style.display = 'block';
-
-    }
-
-    // Function to close the popup
-    function closePopupFunc2() {
-        popupOverlay2.style.display = 'none';
-    }
-    calPop2.addEventListener('click', openPopup2);
-
-
-    // Close the popup when the close button is clicked
-    closePopup2.addEventListener('click', closePopupFunc2);
-    // Close the popup when clicking outside the popup content
-    popupOverlay2.addEventListener('click', function (event) {
-        if (event.target === popupOverlay2) {
-            closePopupFunc2();
-        }
-    });
-});
+})
 
 
 
@@ -125,6 +117,9 @@ document.addEventListener('DOMContentLoaded', function () {
         calendarDates.innerHTML = '';
         monthYear.textContent = `${months[month]} ${year}`;
 
+        // Get events data
+        const events = window.eventsData || [];
+
         // Get the first day of the month
         const firstDay = new Date(year, month, 1).getDay();
 
@@ -137,8 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
             calendarDates.appendChild(blank);
         }
 
-
-
         // Get today's date
         const today = new Date();
 
@@ -149,7 +142,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
             day.textContent = i;
 
-            day.id = 'calPop';
+            const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+
+            // Find events on this specific day
+            const dayEvents = events.filter(event => {
+                // Adjust this if your event.eventdate format is different (e.g., ISO string)
+                return event.eventdate.startsWith(dateString);
+            });
+
+            // If there are events, add a class and a small indicator
+            if (dayEvents.length > 0) {
+                day.classList.add('has-event');
+
+                // Add a small dot or the title of the first event
+                const marker = document.createElement('span');
+                marker.classList.add('event-marker');
+                marker.textContent = ' •'; // Or dayEvents[0].eventtitle
+                day.appendChild(marker);
+
+            }
 
             // Highlight today's date
             if (
@@ -183,73 +194,6 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar(currentMonth, currentYear);
     });
     renderCalendar(currentMonth, currentYear);
-
-
-
-/*
-// --> Calendar Events <--
-    const events = [];
-
-    const eventName = document.getElementById('event_name');
-    const eventDate = document.getElementById('event_date');
-    const eventStartTime = document.getElementById('event_start_time');
-    const eventEndTime = document.getElementById('event_end_time');
-    const eventInfo = document.getElementById('event_info');
-
-
-    // Counter to generate unique event IDs
-    let eventIdCounter = 1;
-
-// Function to add events
-    function addEvent() {
-        let name = eventName.value;
-        let date = eventDate.value;
-        let startTime = eventStartTime.value;
-        let endTime = eventEndTime.value;
-        let description = eventInfo.value;
-
-        if (date && name) {
-            // Create a unique event ID
-            let eventId = eventIdCounter++;
-
-            events.push(
-                {
-                    id: eventId,
-                    name: name,
-                    date: date,
-                    startTime: startTime,
-                    endTime: endTime,
-                    description: description
-                }
-            );
-            renderCalendar(currentMonth, currentYear);
-            eventName.value = "";
-            eventDate.value = "";
-            eventStartTime.value = "";
-            eventEndTime.value = "";
-            eventInfo.value = "";
-        }
-    }
-
-// Function to delete an event by ID
-    function deleteEvent(eventId) {
-        // Find the index of the event with the given ID
-        let eventIndex =
-            events.findIndex((event) =>
-                event.id === eventId);
-
-        if (eventIndex !== -1) {
-            // Remove the event from the events array
-            events.splice(eventIndex, 1);
-            renderCalendar(currentMonth, currentYear);
-        }
-    }
-
-
- */
-
-
-
 
 });
 

@@ -1,14 +1,14 @@
 mixin clubEvent(event)
     .event-card(data-id=event.id)
         h2.event-name#calPopEvent=event.eventtitle
-        div.popup-overlay#popupOverlayEvent
-            div.popup#popupEvent
-                span.close#closePopupEvent &times;
+        div.popup-overlay.popupOverlayEvent
+            div.popup
+                span.close.closePopupEvent &times;
                 div.popup-content
-                    a.button-cancel(href=`/clubs/${club.id}/event/delete`) Remove Event
+                    a.button-cancel(href=`/clubs/${club.id}/event/delete/${event.id}`) Remove Event
                     div.club-event-info
                         div.event-details
-                            h2 Name:
+                            h1 Name:
                             p=event.eventtitle
                         div.event-details
                             h4 Location:

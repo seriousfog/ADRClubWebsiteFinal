@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     news_info: DataTypes.STRING,
     club_id: DataTypes.BIGINT,
     news_on: DataTypes.DATE,
-    is_deleted: DataTypes.BOOLEAN,
     newsDatedAgo: {
       type: DataTypes.VIRTUAL,
       get(){

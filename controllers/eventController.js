@@ -2,6 +2,20 @@ const {ClubEvent} = require('../models')
 
 module.exports.createEvent = async function (req, res){
     let clubId = req.params.clubId;
+    //Check if an event with the same title and date already exists for this club
+    const existingEvent = await ClubEvent.findOne({
+        where: {
+            eventtitle: req.body.eventtitle,
+            eventdate: req.body.eventdate,
+            club_id: clubId
+        }
+    });
+
+    // If event already exists, skip creation and just redirect
+    if (existingEvent) {
+        return res.redirect(`/clubs/${clubId}`);
+    }
+
     await ClubEvent.create({
         eventtitle: req.body.eventtitle,
         eventdescription: req.body.eventdescription,
@@ -15,9 +29,11 @@ module.exports.createEvent = async function (req, res){
 }
 
 module.exports.deleteEvent = async function (req, res){
+    let clubId = req.params.clubId;
+    let eventId = req.params.eventId;
     await ClubEvent.destroy({
         where: {
-            id: req.params.clubId
+            id: eventId
         }
     });
     res.redirect(`/clubs/${clubId}`);

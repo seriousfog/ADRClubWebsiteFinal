@@ -826,7 +826,7 @@ nav.main-nav a:hover {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
+
   margin: 10px 15px 10px 15px;
 }
 
