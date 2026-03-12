@@ -11,13 +11,16 @@ mixin clubEvent(event)
                             h1 Name:
                             p=event.eventtitle
                         div.event-details
+                            h4 Date:
+                            p=event.eventDateBetter
+                        div.event-details
                             h4 Location:
                             p=event.eventlocation
                         div.event-details
                             h4 Time:
-                            p=event.eventstart
+                            p=event.eventStartBetter
                             |
-                            p=event.eventend
+                            p=event.eventEndBetter
                         div.event-details
                             h4.info-event Information:
                             p=event.eventdescription

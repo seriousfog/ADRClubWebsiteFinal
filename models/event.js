@@ -1,4 +1,5 @@
 'use strict';
+const moment = require('moment');
 const {
   Model
 } = require('sequelize');
@@ -21,13 +22,35 @@ module.exports = (sequelize, DataTypes) => {
     eventtitle: DataTypes.STRING,
     eventdescription: DataTypes.STRING,
     eventdate: DataTypes.DATE,
-    eventstart: DataTypes.TIME,
+    eventstart: DataTypes.DATE,
     eventend: DataTypes.TIME,
     eventlocation: DataTypes.STRING,
-    club_id: DataTypes.BIGINT
+    club_id: DataTypes.BIGINT,
+    eventDateBetter: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        let newDate;
+        return newDate = moment(this.eventdate).format('h:mmA');
+      }
+    },
+    eventStartBetter: {
+      type: DataTypes.VIRTUAL,
+      get() {
 
+        let newStart;
+        return newStart = moment(this.eventstart).format();
 
-  }, {
+      }
+    },
+    eventEndBetter: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        let newEnd;
+        return newEnd = moment(this.eventend).format('LT');
+      }
+    }
+  },
+      {
     sequelize,
     modelName: 'ClubEvent',
     tableName: 'clubevent',
