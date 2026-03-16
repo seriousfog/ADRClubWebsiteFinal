@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     eventdescription: DataTypes.STRING,
     eventdate: DataTypes.DATE,
     eventstart: DataTypes.DATE,
-    eventend: DataTypes.TIME,
+    eventend: DataTypes.DATE,
     eventlocation: DataTypes.STRING,
     club_id: DataTypes.BIGINT,
     eventDateBetter: {
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       get() {
 
         let newStart;
-        return newStart = moment(this.eventstart).format();
+        return newStart = moment(this.eventstart).format('LT');
 
       }
     },
