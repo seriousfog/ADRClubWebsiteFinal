@@ -35,7 +35,7 @@ module.exports.addClub = async function(req, res){
             smalldescription: req.body.smalldescription,
             uniquedescription: req.body.uniquedescription,
             commitment: req.body.commitment,
-            clublogo: req.body.clublogo || 'placeholder.jpg'
+            clublogo: req.body.clublogo
         });
 
         console.log('Club created successfully:', newClub.id); // Debug: success

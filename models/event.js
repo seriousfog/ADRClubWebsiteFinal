@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.VIRTUAL,
       get() {
         let newDate;
-        return newDate = moment(this.eventdate).format('h:mmA');
+        return newDate = moment(this.eventdate).format('MMMM Do YYYY');
       }
     },
     eventStartBetter: {

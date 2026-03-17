@@ -2,26 +2,27 @@ mixin clubEvent(event)
     .event-card(data-id=event.id)
         h2.event-name#calPopEvent=event.eventtitle
         div.popup-overlay.popupOverlayEvent
-            div.popup
+            div.popup-event
                 span.close.closePopupEvent &times;
                 div.popup-content
                     a.button-cancel(href=`/clubs/${club.id}/event/delete/${event.id}`) Remove Event
                     div.club-event-info
-                        div.event-details
-                            h1 Name:
-                            p=event.eventtitle
-                        div.event-details
-                            h4 Date:
-                            p=event.eventDateBetter
-                        div.event-details
-                            h4 Location:
-                            p=event.eventlocation
-                        div.event-details
-                            h4 Time:
-                            p=event.eventStartBetter
-                            |
-                            p=event.eventEndBetter
-                        div.event-details
-                            h4.info-event Information:
-                            p=event.eventdescription
+                        div.club-event-info-top
+                            div.event-details
+                                h1=event.eventtitle
+                        div.club-event-info-specifics
+                            div.event-details
+                                h4 Date:
+                                p=event.eventDateBetter
+                            div.event-details
+                                h4 Location:
+                                p=event.eventlocation
+                            div.event-details
+                                h4 Time:
+                                p=event.eventStartBetter
+                                | -
+                                p=event.eventEndBetter
+                        div.club-event-info-desc
+                                h4.info-event Information:
+                                p=event.eventdescription
 

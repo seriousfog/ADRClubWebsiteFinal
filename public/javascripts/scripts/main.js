@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modalOfficers) modalOfficers.textContent = `Officers: ${club.officers || 'TBD'}`;
 
             // Set banner image (with fallback)
-            if (modalBanner) modalBanner.src = club.banner || '/images/banner-placeholder.jpg';
+            if (modalBanner) modalBanner.src = club.banner;
 
             // Set link to individual club page
             if (modalMore) modalMore.href = `/clubs/${club.id}`;
