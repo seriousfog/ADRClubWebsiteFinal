@@ -124,6 +124,10 @@ block content
                 h3 What does a typical meeting look like?
                 p= 'Meetings are held ' + (club.meeting || 'at a time TBD') + ' in ' + (club.location || 'a location TBD') + '. Contact the advisor or officers for more details.'
 
+        div.club-bottom
+            div.club-map
+                img.map(src="https://resources.finalsite.net/images/f_auto,q_auto/v1727983775/fresnouorg/srrw4hjw3racdzsfo4j0/EHSMap-02232024_1.pdf")
+
         .club-admin-actions
             a.back-btn(href="/") ← Back to All Clubs
             a(href="/clubs/" + club.id + "/edit") Edit Club

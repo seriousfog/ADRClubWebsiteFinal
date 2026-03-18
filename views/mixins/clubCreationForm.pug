@@ -1,5 +1,171 @@
-mixin clubCreationForm(club, saveUrl, cancelUrl, deleteUrl)
+mixin clubCreationForm(club, cancelUrl, deleteUrl)
     form(action="#" method="post" enctype="multipart/form-data")
+        .club-detail-page
+            .club-detail-header
+                .club-detail-logo
+                    label(for="clublogo")
+                    input(type="text" name="clublogo" id="clublogo" placeholder="Club Logo URL" required=true)
+
+                .club-detail-info
+                    h1
+                        label(for="clubname")
+                        input(type="text" name="clubname" id="clubname" placeholder="Name of Club" required=true)
+                    .club-detail-tags  -
+                        label(for="category")
+                        select(name="category" id="category")
+                            option(value="") Select Category
+                            option(value="Academic") Academic
+                            option(value="Arts") Arts
+                            option(value="Culture") Culture
+                            option(value="Entertainment") Entertainment
+                            option(value="Health") Health
+                            option(value="Leadership") Leadership
+                            option(value="Sports") Sports
+                            option(value="STEM") STEM
+                        | -
+                    div.club-detail-description
+                        label(for="smalldescription")
+                        textarea(name="smalldescription" id="smalldescription" placeholder="Description of Club" rows=5 cols=5 required=true)
+
+                    .club-detail-meta
+                        div Meets in
+                            label(for="meetingdate").form-label
+                            input(type="text" name="meetingdate" id="meetingdate" placeholder="e.g., Tuesdays @ Lunch")
+                        div Advisor:
+                            label(for="advisorfirstname").form-label
+                            input(type="text" name="advisorfirstname" id="advisorfirstname" placeholder="Advisor First Name")
+                            label(for="advisorlastname").form-label
+                            input(type="text" name="advisorlastname" id="advisorlastname" placeholder="Advisor Last Name")
+
+                    .club-detail-social
+                        a(href='#', target='_blank')
+                            img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png', alt='Instagram')
+                        a(href='#', target='_blank')
+                            img(src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s', alt='Google')
+
+            .club-officers-section
+                h2 Meet the Officers
+                button.addOfficer(type="button")#addOfficer +
+                .club-officers-grid#officerContent
+
+                    .club-officer-card
+                        div.club-officer-card#officerContainer
+                            div.club-officer-img-form
+                                label(for="off_image1") Insert Officer Image
+                                input(type="file" name="off_image1" id="off_image1" accept="image/" required=true)
+                            p.otitle1
+                                label(for="off_first_name1")
+                                input(type="text" name="off_first_name1" id="off_first_name1" placeholder="Officer First Name" required=true)
+                                label(for="off_last_name1")
+                                input(type="text" name="off_last_name1" id="off_last_name1" placeholder="Officer Last Name" required=true)
+                                | -
+                                label(for="officer_position1")
+                                select(name="officer_position1" id="officer_position1" required=true)
+                                    option(value=null)
+                                    option(value="president") President
+                                    option(value="vice_president") Vice President
+                                    option(value="secretary") Secretary
+                                    option(value="treasurer") Treasurer
+                                    option(value="historian") Historian
+            div.club-engagements
+                div.calendar
+                    div.calendar-header
+                        button(id="prev-month") ‹
+                        div#month-year
+                        button(id="next-month") ›
+                    div.calendar-body
+                        div.calendar-weekdays
+                            div Sun
+                            div Mon
+                            div Tue
+                            div Wed
+                            div Thu
+                            div Fri
+                            div Sat
+                        div.calendar-dates
+
+
+                    div.club-events-form
+                        div.club-events
+                            div.club-events-heading
+                                button(type="button")#calPop Add Event
+
+                            div.popup-overlay#popupOverlay
+                                div.popup#popup
+                                    span.close#closePopup &times;
+                                    div.popup-content
+                                        form.eventForm(action=`/clubs/${club.id}/event/create` method='post')
+                                            div.input-container
+                                                label(for="eventtitle").form-label Name of Event:
+                                                input(type="text" name="eventtitle" id="eventtitle" required=true)
+                                            div.input-container
+                                                label(for="eventdate").form-label Date of Event:
+                                                input(type="date" name="eventdate" id="eventdate" required=true)
+                                            div.input-container
+                                                label(for="eventlocation").form-label Location of Event:
+                                                input(type="text" name="eventlocation" id="eventlocation" required=true)
+                                            div.input-container
+                                                label.form-label Event Time:
+                                                input(type="datetime-local" name="eventstart" id="eventstart")
+                                                | to
+                                                input(type="datetime-local" name="eventend" id="eventend")
+                                            div.input-container
+                                                label(for="eventdescription").form-label
+                                                textarea(name="eventdescription" id="eventdescription" placeholder="Event Info..." required=true)
+                                            div.form-button-row
+                                                button.button(type="submit") Submit Event
+
+                        div.club-events-list
+                            each event in (club.clubevents || [])
+                                +clubEvent(event)
+
+
+
+                div.club-news
+                    div.club-news-heading
+                        h2 Club News
+                        h2.formShow#formShow +
+                        h2.formHide#formHide -
+                    div.formNews#formNews
+                        form.news(action=`/clubs/${club.id}/news/create` method="post")
+                            div.input-container
+                                label(for="news_title").form-label Title of News:
+                                input(type="text" name="news_title" id="news_title" required=true)
+                            div.input-container
+                                label(for="news_info").form-label
+                                textarea(name="news_info" id="news_info" placeholder="News Info..." required=true)
+                            div.form-button-row
+                                button.button(type="submit") Add News
+                    div.club-news-info
+
+                        div.club-news-list
+                            each news in (club.clubnews || [])
+                                +clubNews(news)
+
+            .club-info-sections
+                .club-info-block
+                    h3 What is this Activity?
+                    p= club.shortDesc || 'No description available.'
+
+                .club-info-block
+                    h3 What makes this Activity unique?
+                    p= club.shortDesc || 'Information coming soon.'
+
+                .club-info-block
+                    h3 What does a typical meeting look like?
+                    p= 'Meetings are held ' + (club.meeting || 'at a time TBD') + ' in ' + (club.location || 'a location TBD') + '. Contact the advisor or officers for more details.'
+
+            div.club-bottom
+                div.club-map
+                    img.map(src="https://resources.finalsite.net/images/f_auto,q_auto/v1727983775/fresnouorg/srrw4hjw3racdzsfo4j0/EHSMap-02232024_1.pdf")
+
+            .club-admin-actions
+                a.back-btn(href="/") ← Back to All Clubs
+                a(href="/clubs/" + club.id + "/edit") Edit Club
+                form(action="/clubs/" + club.id + "/delete", method="POST", style="display: inline;")
+                    button(type="submit", onclick="return confirm('Are you sure you want to delete this club?')") Delete Club
+    //form(action="#" method="post" enctype="multipart/form-data")
+
         div.club-content1
             div.clubname1
                 label(for="club_name")

@@ -19,20 +19,23 @@ router.get('/clubs/:clubId', clubController.displayClub)
 // SHINE'S FORM ROUTES
 
 // GET club creation form
-/*
-router.get('/club/add', clubController.renderAddClubForm);
+
+router.get('/clubcreate', clubController.renderAddClubForm);
 
 // POST new club - handles form submission
 router.post('/club/add', clubController.renderAddClubForm);
 
 
- */
 
+
+/*
 // GET club creation form
 router.get('/clubcreate', function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
 
+
+ */
 // POST new club - handles form submission
 router.post('/clubs', async function(req, res) {
   try {

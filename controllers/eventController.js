@@ -16,6 +16,7 @@ module.exports.createEvent = async function (req, res){
         return res.redirect(`/clubs/${clubId}`);
     }
 
+    // If event does not exist, Create event for club
     await ClubEvent.create({
         eventtitle: req.body.eventtitle,
         eventdescription: req.body.eventdescription,
@@ -28,6 +29,7 @@ module.exports.createEvent = async function (req, res){
     res.redirect(`/clubs/${clubId}`);
 }
 
+// Delete existing event
 module.exports.deleteEvent = async function (req, res){
     let clubId = req.params.clubId;
     let eventId = req.params.eventId;

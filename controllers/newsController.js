@@ -1,5 +1,7 @@
 const {News} = require('../models');
 
+
+// Create News
 module.exports.createNews = async function (req, res) {
     let clubId = req.params.clubId;
     await News.create({
@@ -11,6 +13,7 @@ module.exports.createNews = async function (req, res) {
     res.redirect(`/clubs/${clubId}`);
 }
 
+// Delete News
 module.exports.deleteNews = async function (req, res){
     let clubId = req.params.clubId;
     let newsId = req.params.newsId;

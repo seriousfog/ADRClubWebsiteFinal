@@ -16,7 +16,7 @@ module.exports.renderAddClubForm = function(req, res){
         secondadivsorfirstname: '',
         secondadivsorlastname: '',
     };
-    res.render('club-create', {club});
+    res.render('clubs/addClub', {club});
 };
 
 module.exports.addClub = async function(req, res){
@@ -48,7 +48,7 @@ module.exports.addClub = async function(req, res){
             console.error('Validation errors:', error.errors.map(e => e.message));
         }
 
-        res.render('club-create', {
+        res.render('/mixins/clubCreationForm', {club}, {
             title: 'Create New Club',
             error: 'Failed to create club: ' + error.message,
             formData: req.body // Send back the form data so user doesn't lose it
