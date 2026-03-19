@@ -36,6 +36,13 @@ mixin clubCreationForm(club, cancelUrl, deleteUrl)
                             input(type="text" name="advisorfirstname" id="advisorfirstname" placeholder="Advisor First Name")
                             label(for="advisorlastname").form-label
                             input(type="text" name="advisorlastname" id="advisorlastname" placeholder="Advisor Last Name")
+                        div Commitment:
+                            label(for="commitment")
+                            select(name="commitment" id="commitment")
+                                option(value="") Select
+                                option(value="Low") Low
+                                option(value="Medium") Medium
+                                option(value="High") High
 
                     .club-detail-social
                         a(href='#', target='_blank')
@@ -47,26 +54,27 @@ mixin clubCreationForm(club, cancelUrl, deleteUrl)
                 h2 Meet the Officers
                 button.addOfficer(type="button")#addOfficer +
                 .club-officers-grid#officerContent
-
                     .club-officer-card
                         div.club-officer-card#officerContainer
                             div.club-officer-img-form
                                 label(for="off_image1") Insert Officer Image
                                 input(type="file" name="off_image1" id="off_image1" accept="image/" required=true)
                             p.otitle1
+                                label(for="officer_position1")
+                                    select(name="officer_position1" id="officer_position1" required=true)
+                                        option(value=null)
+                                        option(value="president") President
+                                        option(value="vice_president") Vice President
+                                        option(value="secretary") Secretary
+                                        option(value="treasurer") Treasurer
+                                        option(value="historian") Historian
+                                | :
                                 label(for="off_first_name1")
                                 input(type="text" name="off_first_name1" id="off_first_name1" placeholder="Officer First Name" required=true)
+                                |
                                 label(for="off_last_name1")
                                 input(type="text" name="off_last_name1" id="off_last_name1" placeholder="Officer Last Name" required=true)
-                                | -
-                                label(for="officer_position1")
-                                select(name="officer_position1" id="officer_position1" required=true)
-                                    option(value=null)
-                                    option(value="president") President
-                                    option(value="vice_president") Vice President
-                                    option(value="secretary") Secretary
-                                    option(value="treasurer") Treasurer
-                                    option(value="historian") Historian
+
             div.club-engagements
                 div.calendar
                     div.calendar-header
@@ -84,63 +92,9 @@ mixin clubCreationForm(club, cancelUrl, deleteUrl)
                             div Sat
                         div.calendar-dates
 
-
-                    div.club-events-form
-                        div.club-events
-                            div.club-events-heading
-                                button(type="button")#calPop Add Event
-
-                            div.popup-overlay#popupOverlay
-                                div.popup#popup
-                                    span.close#closePopup &times;
-                                    div.popup-content
-                                        form.eventForm(action=`/clubs/${club.id}/event/create` method='post')
-                                            div.input-container
-                                                label(for="eventtitle").form-label Name of Event:
-                                                input(type="text" name="eventtitle" id="eventtitle" required=true)
-                                            div.input-container
-                                                label(for="eventdate").form-label Date of Event:
-                                                input(type="date" name="eventdate" id="eventdate" required=true)
-                                            div.input-container
-                                                label(for="eventlocation").form-label Location of Event:
-                                                input(type="text" name="eventlocation" id="eventlocation" required=true)
-                                            div.input-container
-                                                label.form-label Event Time:
-                                                input(type="datetime-local" name="eventstart" id="eventstart")
-                                                | to
-                                                input(type="datetime-local" name="eventend" id="eventend")
-                                            div.input-container
-                                                label(for="eventdescription").form-label
-                                                textarea(name="eventdescription" id="eventdescription" placeholder="Event Info..." required=true)
-                                            div.form-button-row
-                                                button.button(type="submit") Submit Event
-
-                        div.club-events-list
-                            each event in (club.clubevents || [])
-                                +clubEvent(event)
-
-
-
                 div.club-news
                     div.club-news-heading
                         h2 Club News
-                        h2.formShow#formShow +
-                        h2.formHide#formHide -
-                    div.formNews#formNews
-                        form.news(action=`/clubs/${club.id}/news/create` method="post")
-                            div.input-container
-                                label(for="news_title").form-label Title of News:
-                                input(type="text" name="news_title" id="news_title" required=true)
-                            div.input-container
-                                label(for="news_info").form-label
-                                textarea(name="news_info" id="news_info" placeholder="News Info..." required=true)
-                            div.form-button-row
-                                button.button(type="submit") Add News
-                    div.club-news-info
-
-                        div.club-news-list
-                            each news in (club.clubnews || [])
-                                +clubNews(news)
 
             .club-info-sections
                 .club-info-block
