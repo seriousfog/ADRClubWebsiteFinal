@@ -33,42 +33,7 @@ router.post('/club/add', clubController.renderAddClubForm);
 router.get('/clubcreate', function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
-
-
- */
-// POST new club - handles form submission
-router.post('/clubs', async function(req, res) {
-  try {
-    console.log('Form data received:', req.body); // Debug: see what data is coming in
-
-    const newClub = await Club.create({
-      clubname: req.body.clubname,
-      advisorfirstname: req.body.advisorfirstname,
-      advisorlastname: req.body.advisorlastname,
-      meetingdate: req.body.meetingdate,
-      clubroomnumber: req.body.clubroomnumber,
-      category: req.body.category,
-      smalldescription: req.body.smalldescription,
-      clublogo: req.body.clublogo || 'placeholder.jpg'
-    });
-
-    console.log('Club created successfully:', newClub.id); // Debug: success
-    res.redirect('/clubs/' + newClub.id);
-  } catch (error) {
-    console.error('FULL ERROR:', error); // Debug: see full error object
-    console.error('Error name:', error.name);
-    console.error('Error message:', error.message);
-    if (error.errors) {
-      console.error('Validation errors:', error.errors.map(e => e.message));
-    }
-
-    res.render('club-create', {
-      title: 'Create New Club',
-      error: 'Failed to create club: ' + error.message,
-      formData: req.body // Send back the form data so user doesn't lose it
-    });
-  }
-});
+*/
 
 
 // GET officer registration form

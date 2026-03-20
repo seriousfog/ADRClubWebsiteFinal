@@ -52,9 +52,8 @@ mixin clubCreationForm(club, cancelUrl, deleteUrl)
 
             .club-officers-section
                 h2 Meet the Officers
-                button.addOfficer(type="button")#addOfficer +
+                    button.addOfficer(type="button")#addOfficer +
                 .club-officers-grid#officerContent
-                    .club-officer-card
                         div.club-officer-card#officerContainer
                             div.club-officer-img-form
                                 label(for="off_image1") Insert Officer Image
@@ -99,15 +98,19 @@ mixin clubCreationForm(club, cancelUrl, deleteUrl)
             .club-info-sections
                 .club-info-block
                     h3 What is this Activity?
-                    p= club.shortDesc || 'No description available.'
+                    p
+                        label(for="bigdescription")
+                        textarea(name="bigdescription" id="bigdescription" rows="4")
 
                 .club-info-block
                     h3 What makes this Activity unique?
-                    p= club.shortDesc || 'Information coming soon.'
-
+                    p
+                        label(for="uniquedescription")
+                        textarea(name="uniquedescription" id="uniquedescription" rows="4")
                 .club-info-block
                     h3 What does a typical meeting look like?
                     p= 'Meetings are held ' + (club.meeting || 'at a time TBD') + ' in ' + (club.location || 'a location TBD') + '. Contact the advisor or officers for more details.'
+
 
             div.club-bottom
                 div.club-map
