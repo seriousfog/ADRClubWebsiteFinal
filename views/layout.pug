@@ -1,24 +1,30 @@
 doctype html
 html
   head
-    script(type='text/javascript' src='/javascripts/clubNews.js')
+
     title= title || "Edison High School Clubs"
     link(rel="stylesheet", href="/stylesheets/style.css")
-    script(type='text/javascript' src='/javascripts/scripts/calendar.js')
     script(type='text/javascript' src='/javascripts/scripts/clubNews.js')
+    script(type='text/javascript' src='/javascripts/scripts/calendar.js')
     script(type='text/javascript' src='/javascripts/scripts/officer.js')
+    script(type='text/javascript' src='/javascripts/scripts/main.js')
   body
-    //- --- Header / Nav ---
-    header.main-header
-      div.logo
-        img(src="/images/Edison.png", alt="Logo")
-      nav.main-nav
-        a(href="/") Home
-        a(href="/clubcreate") Create Club
-        a(href="/registerofficer") Add Officer
-        a(href="/about") About
-        a(href="/contact") Contact
-
-    main
-      block content
-    script(src='/javascripts/scripts/main.js')
+    nav
+      header.main-header
+        div.logo
+          a(href='https://edison.fresnounified.org/', target='_blank')
+            img(src="/images/Edison.png", alt="Logo")
+        nav.main-nav
+          a(href="/") Home
+          if user && (user.role === "teacher" || user.role === "admin")
+            a(href="/clubcreate") Create Club
+            a(href="/registerofficer") Add Officer
+          if user
+            p.displayname | #{user.ufirstname} |
+            a(href="/logout") Logout
+          else
+            a(href="/registeruser") Register User
+            a(href="/login") Login
+      main
+        block content
+      script(src='/javascripts/scripts/main.js')

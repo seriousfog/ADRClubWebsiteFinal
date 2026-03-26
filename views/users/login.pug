@@ -1,15 +1,21 @@
 extends ../layout
 
 block content
+    .main-content
+        h1 Login
 
-    div.content-form
-        div.form-header Login
-        div
-            form.register(action="/login" method="POST")
-                div.input-container
-                    label(for="school_email") School Email Address:
-                    input(type="text" name="school_email" id="school_email" required=true)
-                div.input-container
-                    label(for="password") Password:
-                    input(type="text" name="password" id="password" required=true)
-                button.button(type="submit") Login
+        form.content-form(action="/login", method="POST")
+            .form-header Login
+
+            .input-container
+                label.form-label Email:
+                input(type="text", name="email" id='email')
+
+            .input-container
+                label.form-label Password:
+                input(type="password", name="password" id='password')
+
+            .club-create-form-button
+                button(type="submit") Login
+        if error
+            p.error=error

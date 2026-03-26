@@ -11,10 +11,13 @@ module.exports.renderAddClubForm = function(req, res){
         category: '',
         clublogo: '',
         smalldescription: '',
+        bigdescription: '',
         uniquedescription: '',
         commitment: '',
         secondadivsorfirstname: '',
         secondadivsorlastname: '',
+        clubinstagram: '',
+        clubbanner: '',
     };
     res.render('clubs/addClub', {club});
 };
@@ -33,9 +36,11 @@ module.exports.addClub = async function(req, res){
             clubroomnumber: req.body.clubroomnumber,
             category: req.body.category,
             smalldescription: req.body.smalldescription,
+            bigdescription: req.body.bigdescription,
             uniquedescription: req.body.uniquedescription,
             commitment: req.body.commitment,
-            clublogo: req.body.clublogo
+            clublogo: req.body.clublogo,
+            clubinstagram: req.body.clubinstagram
         });
 
         console.log('Club created successfully:', newClub.id); // Debug: success
@@ -72,12 +77,20 @@ module.exports.displayClub = async function(req, res, next) {
             });
         }
 
+        // Format officers with their images
+        let officersList = [];
+        if (club.Officers && club.Officers.length > 0) {
+            officersList = club.Officers.map(o => ({
+                name: `${o.officerfirstname} ${o.officerlastname}`,
+                title: o.officertitle,
+                image: o.officerimage || 'https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png', // Default image
+                grade: o.officergradelevel
+            }));
+        }
+
         // Convert to plain object to ensure associations are accessible
         const clubPlain = club.get({ plain: true });
 
-        const officersList = club.Officers && club.Officers.length > 0
-            ? club.Officers.map(o => `${o.officertitle}: ${o.officerfirstname} ${o.officerlastname}`).join(', ')
-            : 'No officers listed';
 
         const formattedClub = {
             id: clubPlain.id,
@@ -85,7 +98,7 @@ module.exports.displayClub = async function(req, res, next) {
             meeting: clubPlain.meetingdate,
             location: clubPlain.clubroomnumber,
             shortDesc: clubPlain.smalldescription,
-
+            bigDesc: clubPlain.bigdescription,
             commitment: clubPlain.commitment,
             uniqueDesc: clubPlain.uniquedescription,
             advisor: `${clubPlain.advisorfirstname || ''} ${clubPlain.advisorlastname || ''}`.trim(),
@@ -96,7 +109,8 @@ module.exports.displayClub = async function(req, res, next) {
             logo: clubPlain.clublogo || '/images/placeholder-logo.png',
             category: clubPlain.category,
             clubevents: clubPlain.clubevents || [],
-            clubnews: clubPlain.clubnews || []
+            clubnews: clubPlain.clubnews || [],
+            clubinstagram: club.clubinstagram,
         };
 
         res.render('clubs/club', {
@@ -110,14 +124,11 @@ module.exports.displayClub = async function(req, res, next) {
 };
 
 module.exports.renderEditClub = async function(req, res) {
-    try {
-        const club = await Club.findByPk(req.params.id);
+
+        const club = await Club.findByPk(req.params.clubId);
         if (!club) return res.status(404).send('Club not found');
-        res.render('club-edit', {title: 'Edit Club', club: club});
-    } catch (error) {
-        next(error);
-    }
-}
+        res.render('clubs/editClub', {title: 'Edit Club', club});
+};
 
 module.exports.updateClub = async function(req, res) {
     try {
@@ -131,8 +142,10 @@ module.exports.updateClub = async function(req, res) {
             clubroomnumber: req.body.clubroomnumber,
             category: req.body.category,
             smalldescription: req.body.smalldescription,
+            bigdescription: req.body.bigdescription,
             uniquedescription: req.body.uniquedescription,
-            commitment: req.body.commitment
+            commitment: req.body.commitment,
+            clubinstagram: req.body.clubinstagram,
         }, {
             where: { id: req.params.id }
         });
@@ -163,6 +176,7 @@ module.exports.displayAll = async function(req, res, next) {
             meeting: club.meetingdate,
             location: club.clubroomnumber,
             shortDesc: club.smalldescription,
+            bigDesc: club.bigdescription,
             commitment: club.commitment,
             uniqueDesc: club.uniquedescription,
             advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
@@ -180,4 +194,9 @@ module.exports.displayAll = async function(req, res, next) {
         console.error('Error fetching clubs:', error);
         next(error);
     }
+};
+
+module.exports.removeOfficerFromClub = async function(req, res) {
+    await Officer.destroy({ where: { id: req.params.id } });
+    res.redirect('/clubs/clubId');
 };

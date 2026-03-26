@@ -3,6 +3,7 @@ mixin clubNews(news)
         div.news-info-header
             h3=news.news_title
             p(style="font-style: italic")=news.newsDatedAgo
-            a.button-cancel(href=`/clubs/${club.id}/news/delete/${news.id}`) Remove News
+            if user && (user.role === "admin" || (user.role === "officer" && user.clubin === club.id))
+                a.button-cancel(href=`/clubs/${club.id}/news/delete/${news.id}`) Remove News
         div.news-content
             p=news.news_info

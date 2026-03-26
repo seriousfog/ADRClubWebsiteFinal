@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+    if user && (user.role === "teacher" || user.role === "admin")
+        .main-content
+            h1 Register Club Officer
+
+            form.content-form(action="/officers", method="POST")
+                .form-header Officer Information
+
+                .input-container
+                    label.form-label Club Name:
+                    input(type="text", name="clubin", required)
+
+                .input-container
+                    label.form-label First Name:
+                    input(type="text", name="officerfirstname", required)
+
+                .input-container
+                    label.form-label Last Name:
+                    input(type="text", name="officerlastname", required)
+
+                .input-container
+                    label.form-label Position/Title:
+                    select(name="officertitle", required)
+                        option(value="") Select Position
+                        option(value="President") President
+                        option(value="Vice-President") Vice-President
+                        option(value="Secretary") Secretary
+                        option(value="Treasurer") Treasurer
+                        option(value="Activities Director") Activities Director
+                        option(value="Historian") Historian
+
+                .input-container
+                    label.form-label Student ID:
+                    input(type="text", name="officerstudentid")
+
+                .input-container
+                    label.form-label Grade Level:
+                    select(name="officergradelevel")
+                        option(value="") Select Grade
+                        option(value="9") 9th
+                        option(value="10") 10th
+                        option(value="11") 11th
+                        option(value="12") 12th
+
+                .input-container
+                    label.form-label Officer Image URL:
+                    input(type="text", name="officerimage")
+
+                .club-create-form-button
+                    button(type="submit") Register Officer
+                    a.button-cancel(href="/") Cancel
+            if error
+                p.error=error

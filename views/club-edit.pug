@@ -16,6 +16,10 @@ block content
                 input(type="text", name="clublogo", value=club.clublogo)
 
             .input-container
+                label.form-label Club Banner:
+                input(type="text", name="clubbanner", value=club.clubbanner)
+
+            .input-container
                 label.form-label Advisor First Name:
                 input(type="text", name="advisorfirstname", value=club.advisorfirstname)
 
@@ -52,8 +56,16 @@ block content
                     option(value="High", selected=club.commitment==='High') High
 
             .input-container
+                label.form-label Instagram Link:
+                input(type="text", name="clubinstagram" value=club.clubinstagram)
+
+            .input-container
                 label.form-label Short Description:
                 textarea(name="smalldescription", rows="3")= club.smalldescription
+
+            .input-container
+                label.form-label Big Description:
+                textarea(name="bigdescription", rows="3")= club.bigdescription
 
             .input-container
                 label.form-label Unique Description:
@@ -64,4 +76,4 @@ block content
                 a.button-cancel(href="/clubs/" + club.id) Cancel
 
         form(action="/clubs/" + club.id + "/delete", method="POST", style="margin-top: 20px;")
-            button(type="submit", style="background-color: #dc3545;") Delete Club
+            button(type="submit", style="background-color: #dc3545; color: white;") Delete Club

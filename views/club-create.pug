@@ -1,68 +1,77 @@
 extends layout
 
 block content
-    .main-content
-        h1 Create New Club
+    if user && (user.role === "teacher" || user.role === "admin")
+        .main-content
+            h1 Create New Club
 
-        if error
-            .error-message(style="color: red; margin-bottom: 20px;")= error
+            form.content-form(action="/clubs", method="POST")
+                .form-header Club Information
 
-        form.content-form(action="/clubs", method="POST")
-            .form-header Club Information
+                .input-container
+                    label.form-label Club Name:
+                    input(type="text", name="clubname", required)
 
-            .input-container
-                label.form-label Club Name:
-                input(type="text", name="clubname", required)
+                .input-container
+                    label.form-label Club Logo:
+                    input(type="text", name="clublogo")
 
-            .input-container
-                label.form-label Club Logo:
-                input(type="text", name="clublogo")
+                .input-container
+                    label.form-label Club Banner:
+                    input(type="text", name="clubbanner")
 
-            .input-container
-                label.form-label Advisor First Name:
-                input(type="text", name="advisorfirstname")
+                .input-container
+                    label.form-label Advisor First Name:
+                    input(type="text", name="advisorfirstname")
 
-            .input-container
-                label.form-label Advisor Last Name:
-                input(type="text", name="advisorlastname")
+                .input-container
+                    label.form-label Advisor Last Name:
+                    input(type="text", name="advisorlastname")
 
-            .input-container
-                label.form-label Meeting Date/Time:
-                input(type="text", name="meetingdate", placeholder="e.g., Tuesdays @ Lunch")
+                .input-container
+                    label.form-label Meeting Date/Time:
+                    input(type="text", name="meetingdate", placeholder="e.g., Tuesdays @ Lunch")
 
-            .input-container
-                label.form-label Room Number:
-                input(type="text", name="clubroomnumber")
+                .input-container
+                    label.form-label Room Number:
+                    input(type="text", name="clubroomnumber")
 
-            .input-container
-                label.form-label Category:
-                select(name="category")
-                    option(value="") Select Category
-                    option(value="Academic") Academic
-                    option(value="Arts") Arts
-                    option(value="Culture") Culture
-                    option(value="Entertainment") Entertainment
-                    option(value="Health") Health
-                    option(value="Leadership") Leadership
-                    option(value="Sports") Sports
-                    option(value="STEM") STEM
+                .input-container
+                    label.form-label Category:
+                    select(name="category")
+                        option(value="") Select Category
+                        option(value="Academic") Academic
+                        option(value="Arts") Arts
+                        option(value="Culture") Culture
+                        option(value="Entertainment") Entertainment
+                        option(value="Health") Health
+                        option(value="Leadership") Leadership
+                        option(value="Sports") Sports
+                        option(value="STEM") STEM
 
-            .input-container
-                label.form-label Commitment:
-                select(name="commitment")
-                    option(value="Low") Low
-                    option(value="Medium") Medium
-                    option(value="High") High
+                .input-container
+                    label.form-label Commitment:
+                    select(name="commitment")
+                        option(value="Low") Low
+                        option(value="Medium") Medium
+                        option(value="High") High
+                .input-container
+                    label.form-label Instagram Link:
+                    input(type="text", name="clubinstagram")
 
-            .input-container
-                label.form-label Short Description:
-                textarea(name="smalldescription", rows="3")
+                .input-container
+                    label.form-label Short Description:
+                    textarea(name="smalldescription", rows="3")
 
-            .input-container
-                label.form-label Unique Description:
-                textarea(name="uniquedescription", rows="3")
+                .input-container
+                    label.form-label Big Description:
+                    textarea(name="bigdescription", rows="3")
+
+                .input-container
+                    label.form-label Unique Description:
+                    textarea(name="uniquedescription", rows="3")
 
 
-            .club-create-form-button
-                button(type="submit") Create Club
-                a.button-cancel(href="/") Cancel
+                .club-create-form-button
+                    button(type="submit") Create Club
+                    a.button-cancel(href="/") Cancel

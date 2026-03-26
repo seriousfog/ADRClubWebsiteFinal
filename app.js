@@ -11,6 +11,7 @@ var logger = require('morgan');
 // Bringing in the actual logic files
 var indexRouter = require('./routes/index'); // This will handle the home page ('/')
 var usersRouter = require('./routes/users'); // Placeholder for user-related stuff ('/users')
+const session = require('express-session');
 
 var app = express();
 
@@ -28,6 +29,18 @@ app.use(cookieParser());
 // This line makes everything in 'public' like CSS, JS, images available to the browser.
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'keyboardCat',
+  resave: true,
+  saveUninitialized: false,
+  cookie:{
+    secure: false,
+    maxAge: 6*60*60*1000
+  }
+}));
+const {passport} = require('./middleware/passport');
+app.use(passport.initialize());
+app.use(passport.authenticate('session'))
 //Routing the requests:
 app.use('/', indexRouter);      // Everything starting with '/' goes to the index route file
 app.use('/users', usersRouter); // Everything starting with '/users' goes to the user route file
@@ -36,6 +49,9 @@ app.use('/users', usersRouter); // Everything starting with '/users' goes to the
 app.use(function (req, res, next) {
   next(createError(404));
 });
+//Routing the requests:
+app.use('/', indexRouter);      // Everything starting with '/' goes to the index route file
+app.use('/users', usersRouter); // Everything starting with '/users' goes to the user route file
 
 app.use(function (err, req, res, next) {
   res.locals.message = err.message;
@@ -44,6 +60,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;

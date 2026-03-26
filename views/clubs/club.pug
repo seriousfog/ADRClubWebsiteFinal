@@ -6,7 +6,6 @@ block content
     .club-detail-page
 
         .club-detail-header
-            a.button(href=`/clubs/${club.id}/edit`) Edit
             img.club-detail-logo(src=club.logo, alt=club.name + ' Logo')
 
             .club-detail-info
@@ -20,23 +19,33 @@ block content
                     p= 'Commitment: ' + club.commitment
 
                 .club-detail-social
-                    a(href='#', target='_blank')
+                    a(href=club.clubinstagram, target='_blank')
                         img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png', alt='Instagram')
-                    a(href='#', target='_blank')
-                        img(src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s', alt='Google')
 
         .club-officers-section
             h2 Meet the Officers
             .club-officers-grid
-                if club.officers && club.officers !== 'No officers listed' && club.officers !== 'See details page'
-                    each officer in club.officers.split(', ')
+
+                if club.officers && club.officers.length > 0
+                    each officer in club.officers
                         .club-officer-card
-                            img(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6I4sTak5bTNLQVa6_nBUOZQ41ASu2Kfpj8Q&s", alt="Officer")
-                            p= officer
+                            if user
+                                img.officer-image(src=officer.image, alt=officer.name, onerror="this.src='https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png'")
+                            else
+                                div.officer-image
+                                    .loginfor Please Login to see😢
+                            p.officer-name= officer.name
+                            p.officer-title= officer.title
+                            if officer.grade
+                                p.officer-grade= 'Grade ' + officer.grade
+
+                            a.button-cancel(href=`/clubs/${club.id}/officer/delete/${officer.id}`) Remove
                 else
                     .club-officer-card
-                        img(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6I4sTak5bTNLQVa6_nBUOZQ41ASu2Kfpj8Q&s", alt="No officer")
+                        img(src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png", alt="No officer")
                         p No officers listed yet
+
+
         div.club-engagements
             div.calendar
                 div.calendar-header
@@ -58,7 +67,8 @@ block content
                 div.club-events-form
                     div.club-events
                         div.club-events-heading
-                            button(type="button")#calPop Add Event
+                            if user && (user.role === "admin" || (user.role === "officer" && user.clubin === club.id))
+                                button(type="button")#calPop Add Event
 
                         div.popup-overlay#popupOverlay
                             div.popup#popup
@@ -94,8 +104,9 @@ block content
             div.club-news
                 div.club-news-heading
                     h2 Club News
-                    h2.formShow#formShow +
-                    h2.formHide#formHide -
+                    if user && (user.role === "admin" || (user.role === "officer" && user.clubin === club.id))
+                        h2.formShow#formShow +
+                        h2.formHide#formHide -
                 div.formNews#formNews
                     form.news(action=`/clubs/${club.id}/news/create` method="post")
                         div.input-container
@@ -115,11 +126,11 @@ block content
         .club-info-sections
             .club-info-block
                 h3 What is this Activity?
-                p= club.shortDesc || 'No description available.'
+                p= club.bigDesc || 'No description available.'
 
             .club-info-block
                 h3 What makes this Activity unique?
-                p= club.shortDesc || 'Information coming soon.'
+                p= club.uniqueDesc || 'Information coming soon.'
 
             .club-info-block
                 h3 What does a typical meeting look like?
@@ -127,13 +138,16 @@ block content
 
         div.club-bottom
             div.club-map
-                img.map(src="https://resources.finalsite.net/images/f_auto,q_auto/v1727983775/fresnouorg/srrw4hjw3racdzsfo4j0/EHSMap-02232024_1.pdf")
+                img.map(src="/images/campus_map.png")
 
         .club-admin-actions
-            a.back-btn(href="/") ← Back to All Clubs
-            a(href="/clubs/" + club.id + "/edit") Edit Club
-            form(action="/clubs/" + club.id + "/delete", method="POST", style="display: inline;")
-                button(type="submit", onclick="return confirm('Are you sure you want to delete this club?')") Delete Club
+            a.back-button(href="/") Back
+
+            if user && (user.role === "admin" || (user.role === "officer" && user.clubin === club.id))
+                a(href="/clubs/" + club.id + "/edit") Edit Club
+            if user && (user.role === "admin")
+                form(action="/clubs/" + club.id + "/delete", method="POST", style="display: inline;")
+                    button(type="submit", onclick="return confirm('Are you sure you want to delete this club?')") Delete Club
 
     // Pass event data to JavaScript (ONLY ONCE, at the bottom)
     script.

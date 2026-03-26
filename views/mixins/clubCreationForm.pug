@@ -1,66 +1,65 @@
-mixin clubCreationForm(club, cancelUrl, deleteUrl)
+mixin clubCreationForm(club, buttonText, saveUrl, cancelUrl, deleteUrl)
     form(action="#" method="post" enctype="multipart/form-data")
         .club-detail-page
             .club-detail-header
                 .club-detail-logo
                     label(for="clublogo")
-                    input(type="text" name="clublogo" id="clublogo" placeholder="Club Logo URL" required=true)
+                    input(type="text" name="clublogo" id="clublogo" placeholder="Club Logo URL" required=true value=club.clublogo)
 
                 .club-detail-info
                     h1
                         label(for="clubname")
-                        input(type="text" name="clubname" id="clubname" placeholder="Name of Club" required=true)
+                        input(type="text" name="clubname" id="clubname" placeholder="Name of Club" required=true value=club.clubname)
                     .club-detail-tags  -
                         label(for="category")
                         select(name="category" id="category")
                             option(value="") Select Category
-                            option(value="Academic") Academic
-                            option(value="Arts") Arts
-                            option(value="Culture") Culture
-                            option(value="Entertainment") Entertainment
-                            option(value="Health") Health
-                            option(value="Leadership") Leadership
-                            option(value="Sports") Sports
-                            option(value="STEM") STEM
+                            option(value="Academic" selected=club.category==='Academic') Academic
+                            option(value="Arts" selected=club.category==='Arts') Arts
+                            option(value="Culture" selected=club.category==='Culture') Culture
+                            option(value="Entertainment" selected=club.category==='Entertainment') Entertainment
+                            option(value="Health" selected=club.category==='Health') Health
+                            option(value="Leadership" selected=club.category==='Leadership') Leadership
+                            option(value="Sports" selected=club.category==='Sports') Sports
+                            option(value="STEM" selected=club.category==='STEM') STEM
                         | -
                     div.club-detail-description
                         label(for="smalldescription")
-                        textarea(name="smalldescription" id="smalldescription" placeholder="Description of Club" rows=5 cols=5 required=true)
+                        textarea(name="smalldescription" id="smalldescription" placeholder="Description of Club" rows=5 cols=5 required=true)= club.smalldescription
 
                     .club-detail-meta
                         div Meets in
                             label(for="meetingdate").form-label
-                            input(type="text" name="meetingdate" id="meetingdate" placeholder="e.g., Tuesdays @ Lunch")
+                            input(type="text" name="meetingdate" id="meetingdate" placeholder="e.g., Tuesdays @ Lunch" value=club.meetingdate)
                         div Advisor:
                             label(for="advisorfirstname").form-label
-                            input(type="text" name="advisorfirstname" id="advisorfirstname" placeholder="Advisor First Name")
+                            input(type="text" name="advisorfirstname" id="advisorfirstname" placeholder="Advisor First Name" value=club.advisorfirstname)
                             label(for="advisorlastname").form-label
-                            input(type="text" name="advisorlastname" id="advisorlastname" placeholder="Advisor Last Name")
+                            input(type="text" name="advisorlastname" id="advisorlastname" placeholder="Advisor Last Name" value=club.advisorlastname)
                         div Commitment:
                             label(for="commitment")
                             select(name="commitment" id="commitment")
                                 option(value="") Select
-                                option(value="Low") Low
-                                option(value="Medium") Medium
-                                option(value="High") High
+                                option(value="Low" selected=club.commitment==='Low') Low
+                                option(value="Medium" selected=club.commitment==='Medium') Medium
+                                option(value="High" selected=club.commitment==='High') High
 
                     .club-detail-social
-                        a(href='#', target='_blank')
-                            img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png', alt='Instagram')
-                        a(href='#', target='_blank')
-                            img(src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s', alt='Google')
+                        img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png', alt='Instagram')
+                        label(for="clubinstagram")
+                        input(type="text" name="clubinstagram" id="clubinstagram" placeholder="Instagram Link" value=club.clubinstagram)
 
             .club-officers-section
                 h2 Meet the Officers
                     button.addOfficer(type="button")#addOfficer +
                 .club-officers-grid#officerContent
-                        div.club-officer-card#officerContainer
+                        //div.club-officer-card#officerContainer
                             div.club-officer-img-form
-                                label(for="off_image1") Insert Officer Image
-                                input(type="file" name="off_image1" id="off_image1" accept="image/" required=true)
+                                label(for="officerimage") Insert Officer Image
+                                input(type="text" name="officerimage" id="officerimage" required=true)
                             p.otitle1
-                                label(for="officer_position1")
-                                    select(name="officer_position1" id="officer_position1" required=true)
+                                label(for="officertitle")
+                                    select(name="officertitle" id="officertitle" required=true)
                                         option(value=null)
                                         option(value="president") President
                                         option(value="vice_president") Vice President
@@ -68,11 +67,11 @@ mixin clubCreationForm(club, cancelUrl, deleteUrl)
                                         option(value="treasurer") Treasurer
                                         option(value="historian") Historian
                                 | :
-                                label(for="off_first_name1")
-                                input(type="text" name="off_first_name1" id="off_first_name1" placeholder="Officer First Name" required=true)
+                                label(for="officerfirstname")
+                                input(type="text" name="officerfirstname" id="officerfirstname" placeholder="Officer First Name" required=true)
                                 |
-                                label(for="off_last_name1")
-                                input(type="text" name="off_last_name1" id="off_last_name1" placeholder="Officer Last Name" required=true)
+                                label(for="officerlastname")
+                                input(type="text" name="officerlastname" id="officerlastname" placeholder="Officer Last Name" required=true)
 
             div.club-engagements
                 div.calendar
@@ -100,13 +99,13 @@ mixin clubCreationForm(club, cancelUrl, deleteUrl)
                     h3 What is this Activity?
                     p
                         label(for="bigdescription")
-                        textarea(name="bigdescription" id="bigdescription" rows="4")
+                        textarea(name="bigdescription" id="bigdescription" rows="4" placeholder="Ex: In this [Club/Activity] we...")= club.bigdescription
 
                 .club-info-block
                     h3 What makes this Activity unique?
                     p
                         label(for="uniquedescription")
-                        textarea(name="uniquedescription" id="uniquedescription" rows="4")
+                        textarea(name="uniquedescription" id="uniquedescription" rows="4" placeholder="Ex: This [Club/Activity] is unique as...")= club.uniquedescription
                 .club-info-block
                     h3 What does a typical meeting look like?
                     p= 'Meetings are held ' + (club.meeting || 'at a time TBD') + ' in ' + (club.location || 'a location TBD') + '. Contact the advisor or officers for more details.'
@@ -114,109 +113,11 @@ mixin clubCreationForm(club, cancelUrl, deleteUrl)
 
             div.club-bottom
                 div.club-map
-                    img.map(src="https://resources.finalsite.net/images/f_auto,q_auto/v1727983775/fresnouorg/srrw4hjw3racdzsfo4j0/EHSMap-02232024_1.pdf")
+                    img.map(src="/images/campus_map.png")
 
             .club-admin-actions
                 a.back-btn(href="/") ← Back to All Clubs
-                a(href="/clubs/" + club.id + "/edit") Edit Club
+                a(href=cancelUrl) Cancel
+                a(type="submit") #{buttonText}
                 form(action="/clubs/" + club.id + "/delete", method="POST", style="display: inline;")
                     button(type="submit", onclick="return confirm('Are you sure you want to delete this club?')") Delete Club
-    //form(action="#" method="post" enctype="multipart/form-data")
-
-        div.club-content1
-            div.clubname1
-                label(for="club_name")
-                input(type="text" name="club_name" id="club_name" placeholder="Name of Club" required=true)
-            div.tags1 -
-                label(for="club_category")
-                select(name="club_category" id="club_category" required=true)
-                    option(value="")
-                    option(value="Sports") Sports
-                    option(value="Entertainment") Entertainment
-                    option(value="Creativity") Creativity
-                    option(value="Leadership") Leadership
-                    option(value="Health") Health
-                    option(value="Education") Education
-
-                |-
-            div.bigdescription1
-                label(for="club_description")
-                textarea(name="club_description" id="club_description" placeholder="Description of Club" rows=5 cols=5 required=true)
-            div.club-card-header-image1
-                label(for="club_image") Insert Club Logo Image
-                input(type="file" name="club_image" id="club_image" accept="image/")
-            p.room1 Meets in
-                label(for="club_meet_room").form-label
-                input(type="text" name="club_meet_room" id="club_meet_room" placeholder="Room [ex: P24]" required=true)
-                |  on
-                label(for="club_meet_day").form-label
-                input(type="text" name="club_meet_day" id="club_meet_day" placeholder="Day(s) [ex: Friday]" required=true)
-                | at
-                label(for="club_meet_time").form-label
-                input(type="text" name="club_meet_time" id="club_meet_time" placeholder="Time [ex: Lunch]" required=true)
-            p.advisor1
-                label(for="club_advisor")
-                input(type="text" name="club_advisor" id="club_advisor" placeholder="Club Advisor [ex: Mr. Doe]" required=true)
-            div.links1
-                label(for="insta_link")
-                input(type="text" name="insta_link" id="insta_link" placeholder="Link to Instagram" required=true)
-
-            div.border1
-        div.space21
-            p.officers1 Meet the Officers
-                button.addOfficer(type="button")#addOfficer +
-                div.officercontent1#officerContent
-                    div.clubofficer-content1#officerContainer
-                        div.officersimage1
-                            label(for="off_image1") Insert Officer Image
-                            input(type="file" name="off_image1" id="off_image1" accept="image/" required=true)
-                        p.otitle1
-                            label(for="off_first_name1")
-                            input(type="text" name="off_first_name1" id="off_first_name1" placeholder="Officer First Name" required=true)
-                            label(for="off_last_name1")
-                            input(type="text" name="off_last_name1" id="off_last_name1" placeholder="Officer Last Name" required=true)
-                            | -
-                            label(for="officer_position1")
-                            select(name="officer_position1" id="officer_position1" required=true)
-                                option(value=null)
-                                option(value="president") President
-                                option(value="vice_president") Vice President
-                                option(value="secretary") Secretary
-                                option(value="treasurer") Treasurer
-                                option(value="historian") Historian
-                        block clubofficer-content1
-
-
-
-
-                div.border21
-
-        div.knowcontent1
-            h1.q1 What is this Activity?
-                p.a1
-                    label(for="what_is_activity")
-                    textarea(name="what_is_activity" id="what_is_activity" placeholder="Explain what this activity is. [Ex: Coding Club is dedicated to improving the coding skills of students...]" rows=8 cols=8 required=true)
-                block knowcontent1
-            div.border21
-            block border21
-                div.knowcontent1
-                    h1.q1 What makes this Activity unique?
-                        p.a1
-                            label(for="what_activity_unique")
-                            textarea(name="what_activity_unique" id="what_activity_unique" placeholder="Explain what makes this activity unique. [Ex: Coding Club is the sole club on campus where students can...]" rows=8 cols=8 required=true)
-                        block knowcontent1
-                    div.border21
-                    block border21
-                        div.knowcontent1
-                            h1.q1 What does a typical meeting look like?
-                                p.a1
-                                    label(for="what_typical_meet")
-                                        textarea(name="what_typical_meet" id="what_typical_meet" placeholder="Explain a typical meeting for this club. [Ex: Coding Club meets every friday and we have a discussion..]" rows=8 cols=8 required=true)
-                                block knowcontent1
-                            div.border21
-
-            div.club-create-form-button
-                a.button-cancel(href=cancelUrl) Cancel
-                if(deleteUrl)
-                    a.button-cancel(href=deleteUrl) Delete
-                button.button.primary(type="submit") Add New Club
