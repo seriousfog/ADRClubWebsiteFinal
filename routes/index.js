@@ -20,10 +20,10 @@ router.get('/clubs/:clubId', addUserToViews, clubController.displayClub)
 
 // GET club creation form
 
-router.get('/clubcreate', addUserToViews, clubController.renderAddClubForm);
+router.get('/club/add', addUserToViews, clubController.renderAddClubForm);
 
 // POST new club - handles form submission
-router.post('/club/add', addUserToViews, clubController.renderAddClubForm);
+router.post('/club/add', addUserToViews, clubController.addClub);
 
 
 
@@ -80,7 +80,7 @@ router.get('/search', addUserToViews,async function(req, res) {
       }
     });
 
-    res.render('index', {
+    res.render('clubs/viewAll', {
       title: 'Search Results',
       clubs: clubs.map(club => ({
         id: club.id,
@@ -127,6 +127,7 @@ router.post('/clubs/:clubId/news/create', addUserToViews, newsController.createN
 //GET delete club news
 router.get('/clubs/:clubId/news/delete/:newsId', addUserToViews, newsController.deleteNews);
 
+// GET remove officer from club
 router.get('/clubs/:clubId/officer/delete/:officerId', addUserToViews, clubController.removeOfficerFromClub);
 
 const md5 = require('md5');

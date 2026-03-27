@@ -1,0 +1,13 @@
+mixin officerCard(officer)
+    .club-officer-card
+        if user
+            img.officer-image(src=officer.image, alt=officer.name, onerror="this.src='https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png'")
+        else
+            div.officer-image
+                .loginfor Please Login to see😢
+        p.officer-name= officer.name
+        p.officer-title= officer.title
+        if officer.grade
+            p.officer-grade= 'Grade ' + officer.grade
+        if user && (user.role === "admin" || (user.role === "officer" && user.clubin === club.id))
+            a.button-cancel(href=`/clubs/${club.id}/officer/delete/${officer.id}`) Remove

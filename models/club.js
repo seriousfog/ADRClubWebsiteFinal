@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             if (models.Officer) {
                 Club.hasMany(models.Officer, {
                     foreignKey: 'clubin',
-                    sourceKey: 'clubname'
+                    sourceKey: 'clubname',
                 });
             }
 

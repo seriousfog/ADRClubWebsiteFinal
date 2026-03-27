@@ -30,17 +30,16 @@ module.exports.addClub = async function(req, res){
             clubname: req.body.clubname,
             advisorfirstname: req.body.advisorfirstname,
             advisorlastname: req.body.advisorlastname,
-            secondadivsorfirstname: req.body.secondadivsorfirstname,
-            secondadivsorlastname: req.body.secondadivsorlastname,
             meetingdate: req.body.meetingdate,
             clubroomnumber: req.body.clubroomnumber,
             category: req.body.category,
             smalldescription: req.body.smalldescription,
-            bigdescription: req.body.bigdescription,
             uniquedescription: req.body.uniquedescription,
             commitment: req.body.commitment,
-            clublogo: req.body.clublogo,
-            clubinstagram: req.body.clubinstagram
+            clublogo: req.body.clublogo || 'placeholder.jpg',
+            clubbanner: req.body.clubbanner || '/images/placeholder-banner.png',
+            bigdescription: req.body.bigdescription,
+            clubinstagram: req.body.clubinstagram,
         });
 
         console.log('Club created successfully:', newClub.id); // Debug: success
@@ -53,7 +52,7 @@ module.exports.addClub = async function(req, res){
             console.error('Validation errors:', error.errors.map(e => e.message));
         }
 
-        res.render('/mixins/clubCreationForm', {club}, {
+        res.render('/mixins/clubCreationForm',{
             title: 'Create New Club',
             error: 'Failed to create club: ' + error.message,
             formData: req.body // Send back the form data so user doesn't lose it
@@ -64,7 +63,7 @@ module.exports.addClub = async function(req, res){
 module.exports.displayClub = async function(req, res, next) {
     try {
         const club = await Club.findByPk(req.params.clubId, {
-            include: [{ model: Officer, required: false }, {model: ClubEvent, as: 'clubevents'}, {model: News, as: 'clubnews'}],
+            include: [{ model: Officer, required: false}, {model: ClubEvent, as: 'clubevents'}, {model: News, as: 'clubnews'}],
             order: [
                 ['clubnews', 'news_on', 'desc']
             ]
@@ -81,6 +80,7 @@ module.exports.displayClub = async function(req, res, next) {
         let officersList = [];
         if (club.Officers && club.Officers.length > 0) {
             officersList = club.Officers.map(o => ({
+                id: o.id,
                 name: `${o.officerfirstname} ${o.officerlastname}`,
                 title: o.officertitle,
                 image: o.officerimage || 'https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png', // Default image
@@ -196,7 +196,14 @@ module.exports.displayAll = async function(req, res, next) {
     }
 };
 
+// Remove an Officer from their club (Should no longer show their card on the respective club page)
 module.exports.removeOfficerFromClub = async function(req, res) {
-    await Officer.destroy({ where: { id: req.params.id } });
-    res.redirect('/clubs/clubId');
+    let clubId = req.params.clubId;
+    let officerId = req.params.officerId;
+    await Officer.destroy({
+        where: {
+            id: officerId
+        }
+    });
+    res.redirect(`/clubs/${clubId}`);
 };

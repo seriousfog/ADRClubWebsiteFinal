@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
             if (models.Club) {
                 Officer.belongsTo(models.Club, {
                     foreignKey: 'clubin',
-                    targetKey: 'clubname'
+                    targetKey: 'clubname',
+                    as: 'club'
                 });
             }
         }
