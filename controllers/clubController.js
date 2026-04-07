@@ -4,8 +4,8 @@ const {Club, Officer, ClubEvent, News} = require('../models');
 module.exports.renderAddClubForm = function(req, res){
     const club = {
         clubname: '',
-        adviserfirstname: '',
-        adviserlastname: '',
+        advisorfirstname: '',
+        advisorlastname: '',
         meetingdate: '',
         clubroomnumber: '',
         category: '',
@@ -36,8 +36,8 @@ module.exports.addClub = async function(req, res){
             smalldescription: req.body.smalldescription,
             uniquedescription: req.body.uniquedescription,
             commitment: req.body.commitment,
-            clublogo: req.body.clublogo || 'placeholder.jpg',
-            clubbanner: req.body.clubbanner || '/images/placeholder-banner.png',
+            clublogo: req.body.clublogo,
+            clubbanner: req.body.clubbanner,
             bigdescription: req.body.bigdescription,
             clubinstagram: req.body.clubinstagram,
         });
@@ -52,10 +52,10 @@ module.exports.addClub = async function(req, res){
             console.error('Validation errors:', error.errors.map(e => e.message));
         }
 
-        res.render('/mixins/clubCreationForm',{
+        res.render('clubs/addClub',{
             title: 'Create New Club',
             error: 'Failed to create club: ' + error.message,
-            formData: req.body // Send back the form data so user doesn't lose it
+            club: req.body // Send back the form data so user doesn't lose it
         });
     }
 };
@@ -105,8 +105,8 @@ module.exports.displayClub = async function(req, res, next) {
             secondAdvisor: clubPlain.secondadvisorfirstname ?
                 `${clubPlain.secondadvisorfirstname} ${clubPlain.secondadvisorlastname || ''}`.trim() : null,
             officers: officersList,
-            banner: clubPlain.clublogo || '/images/placeholder-banner.png',
-            logo: clubPlain.clublogo || '/images/placeholder-logo.png',
+            banner: clubPlain.clublogo,
+            logo: clubPlain.clublogo,
             category: clubPlain.category,
             clubevents: clubPlain.clubevents || [],
             clubnews: clubPlain.clubnews || [],
@@ -181,8 +181,8 @@ module.exports.displayAll = async function(req, res, next) {
             uniqueDesc: club.uniquedescription,
             advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
             officers: 'See details page',
-            banner: club.clublogo || '/images/placeholder-banner.png',
-            logo: club.clublogo || '/images/placeholder-logo.png',
+            banner: club.clublogo,
+            logo: club.clublogo,
             category: club.category
         }));
 

@@ -13,8 +13,6 @@ router.get('/', addUserToViews, function (req, res) {
 
 router.get('/clubs/', addUserToViews, clubController.displayAll)
 
-// GET individual club page by ID
-router.get('/clubs/:clubId', addUserToViews, clubController.displayClub)
 
 // SHINE'S FORM ROUTES
 
@@ -25,6 +23,8 @@ router.get('/club/add', addUserToViews, clubController.renderAddClubForm);
 // POST new club - handles form submission
 router.post('/club/add', addUserToViews, clubController.addClub);
 
+// GET individual club page by ID
+router.get('/clubs/:clubId(\\d+)', addUserToViews, clubController.displayClub)
 
 
 

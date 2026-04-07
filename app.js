@@ -22,7 +22,7 @@ app.set('view engine', 'pug');
 //stuff that runs on every request
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //Serve static files
@@ -41,6 +41,7 @@ app.use(session({
 const {passport} = require('./middleware/passport');
 app.use(passport.initialize());
 app.use(passport.authenticate('session'))
+
 //Routing the requests:
 app.use('/', indexRouter);      // Everything starting with '/' goes to the index route file
 app.use('/users', usersRouter); // Everything starting with '/users' goes to the user route file
