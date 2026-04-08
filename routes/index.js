@@ -112,7 +112,7 @@ router.post('/clubs/:id/edit', addUserToViews, clubController.updateClub);
 
 
 // POST delete club
-router.get('/clubs/:id/delete', addUserToViews, clubController.deleteClub);
+router.post('/clubs/:clubId/delete', addUserToViews, clubController.deleteClub);
 
 
 // POST new club event
@@ -144,7 +144,7 @@ router.post('/registeruser', addUserToViews, async function (req, res) {
     });
 
     if (existingUser) {
-      return res.render('register-user', {
+      return res.render('users/register-user', {
         title: 'Register User',
         error: 'Email already registered'
       });
@@ -163,7 +163,7 @@ router.post('/registeruser', addUserToViews, async function (req, res) {
   } catch (error) {
     console.error('Error creating user:', error);
 
-    res.render('register-user', {
+    res.render('users/register-user', {
       title: 'Register User',
       error: 'Failed to register user: ' + error.message
     });

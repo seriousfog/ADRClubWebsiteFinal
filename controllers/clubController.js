@@ -14,8 +14,8 @@ module.exports.renderAddClubForm = function(req, res){
         bigdescription: '',
         uniquedescription: '',
         commitment: '',
-        secondadivsorfirstname: '',
-        secondadivsorlastname: '',
+        secondadvisorfirstname: '',
+        secondadvisorlastname: '',
         clubinstagram: '',
         clubbanner: '',
     };
@@ -26,7 +26,12 @@ module.exports.addClub = async function(req, res){
     try {
         console.log('Form data received:', req.body); // Debug: see what data is coming in
 
+        const maxId = await Club.max('id') || 0;
+        const nextId = maxId + 1;
+        console.log("--- DEBUG: ATTEMPTING INSERT WITH ID:", nextId);
+
         const newClub = await Club.create({
+            id: nextId,
             clubname: req.body.clubname,
             advisorfirstname: req.body.advisorfirstname,
             advisorlastname: req.body.advisorlastname,
@@ -136,8 +141,8 @@ module.exports.updateClub = async function(req, res) {
             clubname: req.body.clubname,
             advisorfirstname: req.body.advisorfirstname,
             advisorlastname: req.body.advisorlastname,
-            secondadivsorfirstname: req.body.secondadivsorfirstname,
-            secondadivsorlastname: req.body.secondadivsorlastname,
+            secondadvisorfirstname: req.body.secondadvisorfirstname,
+            secondadvisorlastname: req.body.secondadvisorlastname,
             meetingdate: req.body.meetingdate,
             clubroomnumber: req.body.clubroomnumber,
             category: req.body.category,
@@ -158,7 +163,7 @@ module.exports.updateClub = async function(req, res) {
 
 module.exports.deleteClub = async function(req, res) {
     try {
-        await Club.destroy({ where: { id: req.params.id } });
+        await Club.destroy({ where: { id: req.params.clubId } });
         res.redirect('/');
     } catch (error) {
         console.error('Error deleting club:', error);

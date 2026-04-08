@@ -3,4 +3,4 @@ extends ../layout
 block content
     include ../mixins/clubCreationForm
     div.content
-        +clubCreationForm(club, 'Update', `/club/${club.id}/edit`, `/club/${club.id}`, `/club/${club.id}/delete`)
+        +clubCreationForm(club, 'Update', `/clubs/${club.id}/edit`, `/clubs/${club.id}`, `/clubs/${club.id}/delete`)

@@ -1007,6 +1007,11 @@ nav.main-nav a:hover {
   text-align: center;
 }
 
+.button-submit {
+  background: #08bd01;
+  text-align: center;
+}
+
 .back-btn {
   display: inline-block;
   background: #f7a602;
