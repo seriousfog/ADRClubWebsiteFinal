@@ -18,10 +18,10 @@ router.get('/clubs/', addUserToViews, clubController.displayAll)
 
 // GET club creation form
 
-router.get('/club/add', addUserToViews, clubController.renderAddClubForm);
+router.get('/club/add', addUserToViews, requireLogin, noStudent, noOfficer, teacherPermissions, adminPermissions, clubController.renderAddClubForm);
 
 // POST new club - handles form submission
-router.post('/club/add', addUserToViews, clubController.addClub);
+router.post('/club/add', addUserToViews, requireLogin, noStudent, noOfficer, teacherPermissions, adminPermissions, clubController.addClub);
 
 // GET individual club page by ID
 router.get('/clubs/:clubId(\\d+)', addUserToViews, clubController.displayClub)
@@ -37,12 +37,12 @@ router.get('/clubcreate', function(req, res) {
 
 
 // GET officer registration form
-router.get('/registerofficer', addUserToViews, function(req, res) {
-  res.render('register-officer', { title: 'Register Officer' });
+router.get('/registerofficer', requireLogin, function(req, res) {
+  res.render('users/register-officer', { title: 'Register Officer' });
 });
 
 // POST new officer
-router.post('/officers', addUserToViews, async function(req, res) {
+router.post('/officers', addUserToViews, noStudent, teacherPermissions, adminPermissions, async function(req, res) {
   try {
     await Officer.create({
       officertitle: req.body.officertitle,
@@ -59,7 +59,7 @@ router.post('/officers', addUserToViews, async function(req, res) {
     res.redirect('/');
   } catch (error) {
     console.error('Error creating officer:', error);
-    res.render('register-officer', {
+    res.render('users/register-officer', {
       title: 'Register Officer',
       error: 'Failed to register officer: ' + error.message
     });
@@ -67,7 +67,7 @@ router.post('/officers', addUserToViews, async function(req, res) {
 });
 
 // GET search clubs
-router.get('/search', addUserToViews,async function(req, res) {
+router.get('/search', addUserToViews, async function(req, res) {
   try {
     const query = req.query.q;
     const clubs = await Club.findAll({
@@ -105,30 +105,30 @@ router.get('/search', addUserToViews,async function(req, res) {
 });
 
 // GET edit club form
-router.get('/clubs/:clubId/edit', addUserToViews, clubController.renderEditClub);
+router.get('/clubs/:clubId/edit', addUserToViews, requireLogin, noStudent, officerPermissions, teacherPermissions, adminPermissions, clubController.renderEditClub);
 
 // POST update club
-router.post('/clubs/:id/edit', addUserToViews, clubController.updateClub);
+router.post('/clubs/:id/edit', addUserToViews, noStudent, officerPermissions, teacherPermissions, adminPermissions, clubController.updateClub);
 
 
 // POST delete club
-router.post('/clubs/:clubId/delete', addUserToViews, clubController.deleteClub);
+router.post('/clubs/:clubId/delete', addUserToViews, noStudent, adminPermissions, clubController.deleteClub);
 
 
 // POST new club event
-router.post('/clubs/:clubId/event/create', addUserToViews, eventController.createEvent);
+router.post('/clubs/:clubId/event/create', addUserToViews, noStudent, eventController.createEvent);
 
 // GET delete club event
-router.get('/clubs/:clubId/event/delete/:eventId', addUserToViews, eventController.deleteEvent);
+router.get('/clubs/:clubId/event/delete/:eventId', addUserToViews, noStudent, eventController.deleteEvent);
 
 // POST new club news
-router.post('/clubs/:clubId/news/create', addUserToViews, newsController.createNews);
+router.post('/clubs/:clubId/news/create', addUserToViews, noStudent, newsController.createNews);
 
 //GET delete club news
-router.get('/clubs/:clubId/news/delete/:newsId', addUserToViews, newsController.deleteNews);
+router.get('/clubs/:clubId/news/delete/:newsId', addUserToViews, noStudent, newsController.deleteNews);
 
 // GET remove officer from club
-router.get('/clubs/:clubId/officer/delete/:officerId', addUserToViews, clubController.removeOfficerFromClub);
+router.get('/clubs/:clubId/officer/delete/:officerId', addUserToViews, noStudent, clubController.removeOfficerFromClub);
 
 const md5 = require('md5');
 
@@ -207,6 +207,41 @@ function addUserToViews(req, res, next) {
 function requireLogin(req, res, next) {
   if (!req.user) {
     return res.redirect('/login');
+  }
+  next();
+}
+
+function adminPermissions(req, res, next) {
+  if (!req.user.role === "admin") {
+    return res.redirect('/');
+  }
+  next();
+}
+
+function teacherPermissions(req, res, next) {
+  if (!req.user.role === "teacher") {
+    return res.redirect('/');
+  }
+  next();
+}
+
+function officerPermissions(req, res, next) {
+  if (!req.user.role === "officer") {
+    return res.redirect('/');
+  }
+  next();
+}
+
+function noOfficer(req, res, next) {
+  if (req.user.role === "officer") {
+    return res.redirect('/');
+  }
+  next();
+}
+
+function noStudent(req, res, next) {
+  if (req.user.role === "student") {
+    return res.redirect('/');
   }
   next();
 }

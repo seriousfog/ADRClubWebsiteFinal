@@ -5,7 +5,8 @@ mixin clubEvent(event)
             div.popup-event
                 span.close.closePopupEvent &times;
                 div.popup-content
-                    a.button-cancel(href=`/clubs/${club.id}/event/delete/${event.id}`) Remove Event
+                    if user && (user.role === "admin" || (user.role === "officer" && user.clubin === club.id))
+                        a.button-cancel(href=`/clubs/${club.id}/event/delete/${event.id}`) Remove Event
                     div.club-event-info
                         div.club-event-info-top
                             div.event-details
