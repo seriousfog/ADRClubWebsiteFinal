@@ -37,7 +37,7 @@ router.get('/clubcreate', function(req, res) {
 
 
 // GET officer registration form
-router.get('/registerofficer', requireLogin, function(req, res) {
+router.get('/registerofficer', requireLogin, addUserToViews, noStudent, noOfficer, teacherPermissions, adminPermissions, function(req, res) {
   res.render('users/register-officer', { title: 'Register Officer' });
 });
 
@@ -45,21 +45,18 @@ router.get('/registerofficer', requireLogin, function(req, res) {
 router.post('/officers', addUserToViews, noStudent, teacherPermissions, adminPermissions, async function(req, res) {
   try {
     await Officer.create({
-      officertitle: req.body.officertitle,
+      clubin: req.body.clubin,
       officerfirstname: req.body.officerfirstname,
       officerlastname: req.body.officerlastname,
-      clubin: req.body.clubin,
+      officertitle: req.body.officertitle,
       officerstudentid: req.body.officerstudentid,
       officergradelevel: req.body.officergradelevel,
-      officerusername: req.body.officerusername,
-      officerpassword: req.body.officerpassword,
-      officerimage: req.body.officerimage
+      officerimage: req.body.officerimage || 'https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png',
     });
-
     res.redirect('/');
   } catch (error) {
     console.error('Error creating officer:', error);
-    res.render('users/register-officer', {
+    res.render('register-officer', {
       title: 'Register Officer',
       error: 'Failed to register officer: ' + error.message
     });
