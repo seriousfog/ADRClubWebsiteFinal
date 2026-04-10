@@ -198,6 +198,14 @@ router.get('/logout', addUserToViews, function(req, res) {
   });
 });
 
+
+router.get('/profile', addUserToViews, requireLogin, function(req, res) {
+  res.render('users/userProfile', { title: 'Profile User' });
+});
+
+
+// PERMISSIONS
+
 function addUserToViews(req, res, next) {
   if (req.user){
     res.locals.user = req.user;

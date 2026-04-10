@@ -1246,3 +1246,30 @@ nav.main-nav a:hover {
   justify-content: center;
   align-items: center;
 }
+
+/* User Profile Page */
+
+.profile-detail-page {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  align-items: flex-start;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.linebreak {
+  border-top: 1px solid black;
+  width: 100%;
+}
+
