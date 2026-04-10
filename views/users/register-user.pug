@@ -2,36 +2,37 @@ extends ../layout
 
 block content
     .main-content
-        h1.form-header Register User
+        div.register-form
+            h1.form-header Register User
 
-        form.content-form(action="/registeruser", method="POST")
+            form.content-form(action="/registeruser", method="POST")
 
-            .input-container
-                label.form-label First Name:
-                input(type="text", name="ufirstname", required)
+                .input-container
+                    label.form-label First Name:
+                    input(type="text", name="ufirstname", required)
 
-            .input-container
-                label.form-label Last Name:
-                input(type="text", name="ulastname", required)
+                .input-container
+                    label.form-label Last Name:
+                    input(type="text", name="ulastname", required)
 
-            .input-container
-                label.form-label Role:
-                select(name="role")
-                    option(value="") Select Role
-                    option(value="student") Student
-                    option(value="officer") Officer
-                    option(value="teacher") Teacher
+                .input-container
+                    label.form-label Role:
+                    select(name="role")
+                        option(value="") Select Role
+                        option(value="student") Student
+                        option(value="officer") Officer
+                        option(value="teacher") Teacher
 
-            .input-container
-                label.form-label Email:
-                input(type="text", name="email", required)
+                .input-container
+                    label.form-label Email:
+                    input(type="text", name="email", required)
 
-            .input-container
-                label.form-label Password:
-                input(type="password", name="password", required)
+                .input-container
+                    label.form-label Password:
+                    input(type="password", name="password", required)
 
-            .club-create-form-button
-                button(type="submit") Register User
-                a.button-cancel(href="/") Cancel
-        if error
-            p.error=error
+                .club-create-form-button
+                    button(type="submit") Register User
+                    a.button-cancel(href="/") Cancel
+            if error
+                p.error=error

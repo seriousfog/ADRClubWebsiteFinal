@@ -2,20 +2,20 @@ extends ../layout
 
 block content
     .main-content
-        h1 Login
+        div.register-form
+            h1.form-header Login
 
-        form.content-form(action="/login", method="POST")
-            .form-header Login
+            form.content-form(action="/login", method="POST")
 
-            .input-container
-                label.form-label Email:
-                input(type="text", name="email" id='email')
+                .input-container
+                    label.form-label Email:
+                    input(type="text", name="email" id='email')
 
-            .input-container
-                label.form-label Password:
-                input(type="password", name="password" id='password')
+                .input-container
+                    label.form-label Password:
+                    input(type="password", name="password" id='password')
 
-            .club-create-form-button
-                button(type="submit") Login
-        if error
-            p.error=error
+                .club-create-form-button
+                    button(type="submit") Login
+            if error
+                p.error=error

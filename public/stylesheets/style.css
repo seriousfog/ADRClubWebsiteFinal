@@ -621,7 +621,6 @@ nav.main-nav a:hover {
 
 /* INDIVIDUAL CLUB PAGE - FIXED LAYOUT */
 .club-detail-page {
-  background: #f8f8f8;
   min-height: 100vh;
   padding: 20px;
 }
@@ -1227,6 +1226,7 @@ nav.main-nav a:hover {
   color: black;
   font-weight: bold;
   width: 100%;
+  margin-top: 130px;
 
 }
 
@@ -1238,4 +1238,11 @@ nav.main-nav a:hover {
 .loginfor {
   text-align: center;
   color: #555;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

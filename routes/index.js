@@ -72,7 +72,8 @@ router.get('/search', addUserToViews, async function(req, res) {
         [Op.or]: [
           { clubname: { [Op.iLike]: `%${query}%` } },
           { category: { [Op.iLike]: `%${query}%` } },
-          { smalldescription: { [Op.iLike]: `%${query}%` } }
+          { commitment: { [Op.iLike]: `%${query}%` } },
+          { advisorlastname: { [Op.iLike]: `%${query}%` } }
         ]
       }
     });
@@ -85,13 +86,15 @@ router.get('/search', addUserToViews, async function(req, res) {
         meeting: club.meetingdate,
         location: club.clubroomnumber,
         shortDesc: club.smalldescription,
-        bigDesc: club.bigdescription,
-        commitment: 'TBD',
+        commitment: club.commitment,
+        uniqueDesc: club.uniquedescription,
         advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
         officers: 'See details page',
-        banner: club.clublogo || '/images/placeholder-banner.png',
+        banner: club.clubbanner || '/images/placeholder-banner.png',
         logo: club.clublogo || '/images/placeholder-logo.png',
-        category: club.category
+        category: club.category,
+        bigDesc: club.bigdescription,
+        clubinstagram: club.clubinstagram,
       })),
       searchQuery: query
     });
@@ -100,6 +103,7 @@ router.get('/search', addUserToViews, async function(req, res) {
     res.redirect('/');
   }
 });
+
 
 // GET edit club form
 router.get('/clubs/:clubId/edit', addUserToViews, requireLogin, noStudent, officerPermissions, teacherPermissions, adminPermissions, clubController.renderEditClub);
