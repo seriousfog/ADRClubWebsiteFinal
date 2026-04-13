@@ -21,6 +21,13 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'clubnews',
                 foreignKey: 'club_id'
             });
+            Club.belongsToMany(models.User, {
+                through: 'userclubs',
+                as: 'users',
+                foreignKey: 'club_id',
+                otherKey: 'user_id',
+                timestamps: false
+            });
         }
     }
 

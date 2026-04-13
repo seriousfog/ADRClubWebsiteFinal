@@ -1,4 +1,4 @@
-const {Club, Officer, ClubEvent, News} = require('../models');
+const {Club, Officer, ClubEvent, News, UserClub} = require('../models');
 
 
 module.exports.renderAddClubForm = function(req, res){
@@ -212,3 +212,12 @@ module.exports.removeOfficerFromClub = async function(req, res) {
     });
     res.redirect(`/clubs/${clubId}`);
 };
+
+
+module.exports.joinClub = async function(req, res) {
+    await UserClub.create({
+        user_id: req.body.user,
+        club_id: req.body.clubId
+    });
+    res.redirect(`/clubs${clubId}`);
+}

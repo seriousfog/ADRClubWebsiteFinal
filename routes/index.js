@@ -5,6 +5,7 @@ const { Op } = require('sequelize');
 const clubController = require('../controllers/clubController');
 const eventController = require('../controllers/eventController');
 const newsController = require('../controllers/newsController');
+const userController = require('../controllers/userController');
 
 // GET home page - shows all clubs from database
 router.get('/', addUserToViews, function (req, res) {
@@ -133,43 +134,10 @@ router.get('/clubs/:clubId/officer/delete/:officerId', addUserToViews, noStudent
 
 const md5 = require('md5');
 
-router.get('/registeruser', addUserToViews, function(req, res) {
-  res.render('users/register-user', { title: 'Register User' });
-});
+router.get('/registeruser', addUserToViews, userController.renderRegisterUserForm);
 
-router.post('/registeruser', addUserToViews, async function (req, res) {
-  try {
 
-    const existingUser = await User.findOne({
-      where: { email: req.body.email }
-    });
-
-    if (existingUser) {
-      return res.render('users/register-user', {
-        title: 'Register User',
-        error: 'Email already registered'
-      });
-    }
-
-    await User.create({
-      email: req.body.email,
-      password: md5(req.body.password),
-      ufirstname: req.body.ufirstname,
-      ulastname: req.body.ulastname,
-      role: req.body.role,
-    });
-
-    res.redirect('/');
-
-  } catch (error) {
-    console.error('Error creating user:', error);
-
-    res.render('users/register-user', {
-      title: 'Register User',
-      error: 'Failed to register user: ' + error.message
-    });
-  }
-});
+router.post('/registeruser', addUserToViews, userController.registerUser);
 
 const passport = require('passport');
 
@@ -199,10 +167,8 @@ router.get('/logout', addUserToViews, function(req, res) {
 });
 
 
-router.get('/profile', addUserToViews, requireLogin, function(req, res) {
-  res.render('users/userProfile', { title: 'Profile User' });
-});
-
+router.get('/profile/:id', requireLogin, userController.viewUserProfile);
+router.post('/clubs/:clubId/join/', requireLogin, clubController.joinClub);
 
 // PERMISSIONS
 

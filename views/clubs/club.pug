@@ -22,6 +22,11 @@ block content
                 .club-detail-social
                     a(href=club.clubinstagram, target='_blank')
                         img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png', alt='Instagram')
+            if user
+                .club-admin-actions
+                    form(action=(`/clubs/${club.id}/join/`) method='post')
+
+                        button.button-submit(type="submit") Join Club!
 
         .club-officers-section
             h2 Meet the Officers

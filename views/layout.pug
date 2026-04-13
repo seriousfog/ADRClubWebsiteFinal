@@ -19,7 +19,7 @@ html
             a(href="/club/add") Create Club
             a(href="/registerofficer") Add Officer
           if user
-            a.displayname(href="/profile")  | #{user.role} - #{user.ufirstname} |
+            a.displayname(href=`/profile/${user.id}`)  | #{user.role} - #{user.ufirstname} |
             a(href="/logout") Logout
           else
             a(href="/registeruser") Register User

@@ -982,7 +982,6 @@ nav.main-nav a:hover {
 /* Admin Actions */
 .club-admin-actions {
   text-align: center;
-  padding: 40px;
   display: flex;
   gap: 15px;
   justify-content: center;
