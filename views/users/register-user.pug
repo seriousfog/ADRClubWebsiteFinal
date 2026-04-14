@@ -1,6 +1,9 @@
 extends ../layout
 
 block content
+    if user && (user.role === "teacher" || user.role === "student")
+        head
+            meta(http-equiv="refresh" content="0; url=/")
     .main-content
         div.register-form
             h1.form-header Register User
@@ -20,7 +23,6 @@ block content
                     select(name="role")
                         option(value="") Select Role
                         option(value="student") Student
-                        option(value="officer") Officer
                         option(value="teacher") Teacher
 
                 .input-container

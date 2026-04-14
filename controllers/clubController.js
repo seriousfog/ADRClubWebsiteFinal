@@ -219,5 +219,28 @@ module.exports.joinClub = async function(req, res) {
         user_id: req.body.user,
         club_id: req.body.clubId
     });
-    res.redirect(`/clubs${clubId}`);
+    res.redirect(`/clubs/${clubId}`);
+};
+
+module.exports.leaveClub = async function(req, res) {
+    await UserClub.destroy({
+        where: {
+            club_id: req.body.clubId,
+            user_id: req.body.userId,
+        }
+    });
+    res.redirect(`/clubs/${clubId}`);
 }
+
+
+/*
+function clubHasUser(club, user) {
+    for(let i = 0; i < club.users.length; i++){
+        if(user.id === club.users[i].id) {
+            return true;
+        }
+    }
+
+}
+
+ */

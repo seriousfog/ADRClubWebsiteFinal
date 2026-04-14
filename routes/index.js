@@ -169,6 +169,10 @@ router.get('/logout', addUserToViews, function(req, res) {
 
 router.get('/profile/:id', requireLogin, userController.viewUserProfile);
 router.post('/clubs/:clubId/join/', requireLogin, clubController.joinClub);
+router.get();
+
+
+
 
 // PERMISSIONS
 
