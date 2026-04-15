@@ -1,0 +1,7 @@
+mixin userClubIn(club)
+
+    a(href=`/clubs/${club.id}`)
+        div.user-club
+            .card-logo
+                img(src=club.clublogo, alt=club.name + ' Logo')
+            h3= club.clubname

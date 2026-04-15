@@ -1,4 +1,6 @@
 const {User, Club, UserClub} = require('../models');
+const passport = require('passport');
+const md5 = require("md5");
 
 
 module.exports.renderRegisterUserForm = function(req, res){
@@ -27,7 +29,7 @@ module.exports.registerUser = async function(req, res){
             role: req.body.role,
         });
 
-        res.redirect('/');
+        res.redirect('/login');
 
     } catch (error) {
         console.error('Error creating user:', error);
@@ -39,21 +41,17 @@ module.exports.registerUser = async function(req, res){
     }
 }
 
-/*
-const passport = require('passport');
-const md5 = require("md5");
 
+module.exports.renderLogin = function(req, res){
+    res.render('users/login', {title: 'Login User'})
+}
 
-router.post('/login', addUserToViews, passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/login',
-        failureMessage: true
-    })
-);
-
-router.get('/login', addUserToViews, function (req, res) {
-    res.render('users/login', { title: 'Login User' });
+module.exports.login = passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureMessage: true
 });
+
 
 module.exports.logout = function (req, res) {
     req.logout(function(err) {
@@ -62,19 +60,6 @@ module.exports.logout = function (req, res) {
     res.redirect('/login');
 }
 
-router.get('/logout', addUserToViews, function(req, res) {
-    req.logout(function() {
-        res.redirect('/');
-    });
-});
-
-
-router.get('/profile', addUserToViews, requireLogin, function(req, res) {
-    res.render('users/userProfile', { title: 'Profile User' });
-});
-
-
- */
 
 module.exports.viewUserProfile = async function(req, res){
     const user = await User.findByPk(req.params.id, {

@@ -65,45 +65,7 @@ router.post('/officers', addUserToViews, noStudent, teacherPermissions, adminPer
 });
 
 // GET search clubs
-router.get('/search', addUserToViews, async function(req, res) {
-  try {
-    const query = req.query.q;
-    const clubs = await Club.findAll({
-      where: {
-        [Op.or]: [
-          { clubname: { [Op.iLike]: `%${query}%` } },
-          { category: { [Op.iLike]: `%${query}%` } },
-          { commitment: { [Op.iLike]: `%${query}%` } },
-          { advisorlastname: { [Op.iLike]: `%${query}%` } }
-        ]
-      }
-    });
-
-    res.render('clubs/viewAll', {
-      title: 'Search Results',
-      clubs: clubs.map(club => ({
-        id: club.id,
-        name: club.clubname,
-        meeting: club.meetingdate,
-        location: club.clubroomnumber,
-        shortDesc: club.smalldescription,
-        commitment: club.commitment,
-        uniqueDesc: club.uniquedescription,
-        advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
-        officers: 'See details page',
-        banner: club.clubbanner || '/images/placeholder-banner.png',
-        logo: club.clublogo || '/images/placeholder-logo.png',
-        category: club.category,
-        bigDesc: club.bigdescription,
-        clubinstagram: club.clubinstagram,
-      })),
-      searchQuery: query
-    });
-  } catch (error) {
-    console.error('Search error:', error);
-    res.redirect('/');
-  }
-});
+router.get('/search', addUserToViews, clubController.search);
 
 
 // GET edit club form
@@ -132,45 +94,19 @@ router.get('/clubs/:clubId/news/delete/:newsId', addUserToViews, noStudent, news
 // GET remove officer from club
 router.get('/clubs/:clubId/officer/delete/:officerId', addUserToViews, noStudent, clubController.removeOfficerFromClub);
 
-const md5 = require('md5');
-
+//Register Users
 router.get('/registeruser', addUserToViews, userController.renderRegisterUserForm);
-
-
 router.post('/registeruser', addUserToViews, userController.registerUser);
 
-const passport = require('passport');
+//User Login and Logout
+router.get('/login', addUserToViews, userController.renderLogin);
+router.post('/login', addUserToViews, userController.login);
+router.get('/logout', addUserToViews, userController.logout);
 
-
-router.post('/login', addUserToViews, passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureMessage: true
-    })
-);
-
-router.get('/login', addUserToViews, function (req, res) {
-  res.render('users/login', { title: 'Login User' });
-});
-
-module.exports.logout = function (req, res) {
-  req.logout(function(err) {
-    if (err) { return next(err); }
-  });
-  res.redirect('/login');
-}
-
-router.get('/logout', addUserToViews, function(req, res) {
-  req.logout(function() {
-    res.redirect('/');
-  });
-});
-
-
+// User Profile Page and JOIN/LEAVE Clubs
 router.get('/profile/:id', requireLogin, userController.viewUserProfile);
 router.post('/clubs/:clubId/join/', requireLogin, clubController.joinClub);
-router.get();
-
+router.get('/clubs/:clubId/leave/:userId', requireLogin, clubController.leaveClub);
 
 
 

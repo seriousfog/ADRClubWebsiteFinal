@@ -1,9 +1,8 @@
 extends ../layout
 
 block content
-    include ../mixins/clubEvent
-    include ../mixins/clubNews
-    include ../mixins/officerCard
+    include ../mixins/userClubIn
+
     .profile-detail-page
 
         .profile-details
@@ -14,7 +13,10 @@ block content
                 .profile-clubs
                     h2 #{user.ufirstname}'s Clubs
 
-
+                    // USER'S LIST OF CLUBS THEY ARE CURRENTLY IN
+                    div.user-club-list
+                        each club in user.clubs
+                            +userClubIn(club)
 
 
 

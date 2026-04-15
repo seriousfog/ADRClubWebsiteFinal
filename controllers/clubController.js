@@ -1,4 +1,5 @@
-const {Club, Officer, ClubEvent, News, UserClub} = require('../models');
+const {Club, Officer, ClubEvent, News, UserClub, User} = require('../models');
+const {Op} = require("sequelize");
 
 
 module.exports.renderAddClubForm = function(req, res){
@@ -26,12 +27,9 @@ module.exports.addClub = async function(req, res){
     try {
         console.log('Form data received:', req.body); // Debug: see what data is coming in
 
-        const maxId = await Club.max('id') || 0;
-        const nextId = maxId + 1;
-        console.log("--- DEBUG: ATTEMPTING INSERT WITH ID:", nextId);
+
 
         const newClub = await Club.create({
-            id: nextId,
             clubname: req.body.clubname,
             advisorfirstname: req.body.advisorfirstname,
             advisorlastname: req.body.advisorlastname,
@@ -68,7 +66,12 @@ module.exports.addClub = async function(req, res){
 module.exports.displayClub = async function(req, res, next) {
     try {
         const club = await Club.findByPk(req.params.clubId, {
-            include: [{ model: Officer, required: false}, {model: ClubEvent, as: 'clubevents'}, {model: News, as: 'clubnews'}],
+            include: [
+                { model: Officer, required: false},
+                {model: ClubEvent, as: 'clubevents'},
+                {model: News, as: 'clubnews'},
+                {model: User, as: 'users'}
+            ],
             order: [
                 ['clubnews', 'news_on', 'desc']
             ]
@@ -91,6 +94,11 @@ module.exports.displayClub = async function(req, res, next) {
                 image: o.officerimage || 'https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png', // Default image
                 grade: o.officergradelevel
             }));
+        }
+
+        let isMember = false;
+        if (req.user && club.users) {
+            isMember = club.users.some(u => u.id === req.user.id)
         }
 
         // Convert to plain object to ensure associations are accessible
@@ -120,7 +128,8 @@ module.exports.displayClub = async function(req, res, next) {
 
         res.render('clubs/club', {
             title: club.clubname,
-            club: formattedClub
+            club: formattedClub,
+            isMember: isMember
         });
     } catch (error) {
         console.error('Error fetching club:', error);
@@ -201,6 +210,50 @@ module.exports.displayAll = async function(req, res, next) {
     }
 };
 
+
+//Searching for clubs on the viewAll page
+module.exports.search = async function(req, res) {
+    try {
+        const query = req.query.q;
+        const clubs = await Club.findAll({
+            where: {
+                [Op.or]: [
+                    { clubname: { [Op.iLike]: `%${query}%` } },
+                    { category: { [Op.iLike]: `%${query}%` } },
+                    { commitment: { [Op.iLike]: `%${query}%` } },
+                    { advisorlastname: { [Op.iLike]: `%${query}%` } }
+                ]
+            }
+        });
+
+        res.render('clubs/viewAll', {
+            title: 'Search Results',
+            clubs: clubs.map(club => ({
+                id: club.id,
+                name: club.clubname,
+                meeting: club.meetingdate,
+                location: club.clubroomnumber,
+                shortDesc: club.smalldescription,
+                commitment: club.commitment,
+                uniqueDesc: club.uniquedescription,
+                advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
+                officers: 'See details page',
+                banner: club.clubbanner || '/images/placeholder-banner.png',
+                logo: club.clublogo || '/images/placeholder-logo.png',
+                category: club.category,
+                bigDesc: club.bigdescription,
+                clubinstagram: club.clubinstagram,
+            })),
+            searchQuery: query
+        });
+    } catch (error) {
+        console.error('Search error:', error);
+        res.redirect('/');
+    }
+};
+
+
+
 // Remove an Officer from their club (Should no longer show their card on the respective club page)
 module.exports.removeOfficerFromClub = async function(req, res) {
     let clubId = req.params.clubId;
@@ -215,32 +268,24 @@ module.exports.removeOfficerFromClub = async function(req, res) {
 
 
 module.exports.joinClub = async function(req, res) {
+    const clubId = req.params.clubId;
+    const userId = req.user.id;
+
     await UserClub.create({
-        user_id: req.body.user,
-        club_id: req.body.clubId
+        user_id: userId,
+        club_id: clubId
     });
     res.redirect(`/clubs/${clubId}`);
 };
 
 module.exports.leaveClub = async function(req, res) {
+    const { clubId, userId } = req.params;
+
     await UserClub.destroy({
         where: {
-            club_id: req.body.clubId,
-            user_id: req.body.userId,
+            club_id: clubId,
+            user_id: userId,
         }
     });
     res.redirect(`/clubs/${clubId}`);
 }
-
-
-/*
-function clubHasUser(club, user) {
-    for(let i = 0; i < club.users.length; i++){
-        if(user.id === club.users[i].id) {
-            return true;
-        }
-    }
-
-}
-
- */

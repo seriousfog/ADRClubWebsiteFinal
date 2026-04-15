@@ -35,9 +35,8 @@ module.exports = (sequelize, DataTypes) => {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: false,
-            allowNull: false,
-            defaultValue: null
+            autoIncrement: true,
+            allowNull: false
         },
         clubname: {
             type: DataTypes.STRING,

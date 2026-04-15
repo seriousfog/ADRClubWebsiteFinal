@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // FUNCTION TO CLOSE MODAL
     function closeModal() {
-        modal.style.display = 'none';
+        modal.classList.remove('is-visible')
         overlay.style.display = 'none';
     }
 
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Show modal and overlay
             overlay.style.display = 'block';
-            modal.style.display = 'block';
+            modal.classList.add('is-visible');
         });
     });
 
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close modal with Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            if (modal.style.display === 'block') {
+            if (modal.classList.contains('is-visible')) {
                 closeModal();
             }
         }

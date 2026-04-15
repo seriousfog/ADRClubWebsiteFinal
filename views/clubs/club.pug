@@ -24,8 +24,9 @@ block content
                         img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png', alt='Instagram')
             if user
                 .club-admin-actions
-                    form(action=(`/clubs/${club.id}/join/`) method='post')
-
+                    if isMember
+                        a.button-cancel(href=`/clubs/${club.id}/leave/${user.id}`) Leave Club
+                    else
                         button.button-submit(type="submit") Join Club!
 
         .club-officers-section
