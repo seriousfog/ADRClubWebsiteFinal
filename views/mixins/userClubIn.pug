@@ -3,5 +3,9 @@ mixin userClubIn(club)
     a(href=`/clubs/${club.id}`)
         div.user-club
             .card-logo
-                img(src=club.clublogo, alt=club.name + ' Logo')
+                img(
+                    src=club.clublogo || '/images/logo-placeholder.png',
+                    alt=`${club.name} Logo`,
+                    onerror="this.src='/images/placeholder.jpg';"
+                )
             h3= club.clubname

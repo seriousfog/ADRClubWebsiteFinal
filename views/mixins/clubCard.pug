@@ -5,7 +5,7 @@ mixin clubCard(club)
             img(
                 src=club.logo || '/images/logo-placeholder.png',
                 alt=`${club.name} Logo`,
-                onerror="this.src='/images/Edison.png';"
+                onerror="this.src='/images/placeholder.jpg';"
             )
         .card-info
             h2= club.name

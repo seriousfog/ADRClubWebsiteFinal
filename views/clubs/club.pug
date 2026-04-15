@@ -27,7 +27,8 @@ block content
                     if isMember
                         a.button-cancel(href=`/clubs/${club.id}/leave/${user.id}`) Leave Club
                     else
-                        button.button-submit(type="submit") Join Club!
+                        form(action=`/clubs/${club.id}/join` method='post')
+                            button.button-submit(type="submit") Join Club!
 
         .club-officers-section
             h2 Meet the Officers

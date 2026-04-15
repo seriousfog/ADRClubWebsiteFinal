@@ -238,8 +238,8 @@ module.exports.search = async function(req, res) {
                 uniqueDesc: club.uniquedescription,
                 advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
                 officers: 'See details page',
-                banner: club.clubbanner || '/images/placeholder-banner.png',
-                logo: club.clublogo || '/images/placeholder-logo.png',
+                banner: club.clubbanner || '/images/placeholder.jpg',
+                logo: club.clublogo || '/images/placeholder.jpg]',
                 category: club.category,
                 bigDesc: club.bigdescription,
                 clubinstagram: club.clubinstagram,
@@ -268,8 +268,11 @@ module.exports.removeOfficerFromClub = async function(req, res) {
 
 
 module.exports.joinClub = async function(req, res) {
+
     const clubId = req.params.clubId;
     const userId = req.user.id;
+
+
 
     await UserClub.create({
         user_id: userId,
