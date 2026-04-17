@@ -22,7 +22,7 @@ block content
     // Modal (hidden by default)
     #club-modal.modal
         .modal-banner
-            img#modal-banner(src='/images/placeholder.jpg', alt='Club Banner')
+            img#modal-banner(src='/images/placeholder.jpg', alt='Club Banner', onerror="this.src='/images/placeholder.jpg';")
         .modal-content
             span#close-btn &times;
             h2#modal-name Club Name

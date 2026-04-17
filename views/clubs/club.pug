@@ -7,7 +7,7 @@ block content
     .club-detail-page
 
         .club-detail-header
-            img.club-detail-logo(src=club.logo, alt=club.name + ' Logo')
+            img.club-detail-logo(src=club.logo, alt=club.name + ' Logo', onerror="this.src='/images/placeholder.jpg';")
 
             .club-detail-info
                 h1= club.name
@@ -21,7 +21,7 @@ block content
 
                 .club-detail-social
                     a(href=club.clubinstagram, target='_blank')
-                        img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png', alt='Instagram')
+                        img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/330px-Instagram_logo_2016.svg.png?_=20210403190622', alt='Instagram', onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/330px-Instagram_logo_2016.svg.png?_=20210403190622'")
             if user
                 .club-admin-actions
                     if isMember

@@ -104,7 +104,7 @@ router.post('/login', addUserToViews, userController.login);
 router.get('/logout', addUserToViews, userController.logout);
 
 // User Profile Page and JOIN/LEAVE Clubs
-router.get('/profile/:id', requireLogin, userController.viewUserProfile);
+router.get('/profile/:id(\\d+)', requireLogin, userController.viewUserProfile);
 router.post('/clubs/:clubId/join/', requireLogin, clubController.joinClub);
 router.get('/clubs/:clubId/leave/:userId', requireLogin, clubController.leaveClub);
 

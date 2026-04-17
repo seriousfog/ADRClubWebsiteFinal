@@ -118,7 +118,7 @@ module.exports.displayClub = async function(req, res, next) {
             secondAdvisor: clubPlain.secondadvisorfirstname ?
                 `${clubPlain.secondadvisorfirstname} ${clubPlain.secondadvisorlastname || ''}`.trim() : null,
             officers: officersList,
-            banner: clubPlain.clublogo,
+            banner: clubPlain.clubbanner,
             logo: clubPlain.clublogo,
             category: clubPlain.category,
             clubevents: clubPlain.clubevents || [],
@@ -160,6 +160,8 @@ module.exports.updateClub = async function(req, res) {
             uniquedescription: req.body.uniquedescription,
             commitment: req.body.commitment,
             clubinstagram: req.body.clubinstagram,
+            clublogo: req.body.clublogo,
+            clubbanner: req.body.clubbanner,
         }, {
             where: { id: req.params.id }
         });
@@ -195,7 +197,7 @@ module.exports.displayAll = async function(req, res, next) {
             uniqueDesc: club.uniquedescription,
             advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
             officers: 'See details page',
-            banner: club.clublogo,
+            banner: club.clubbanner,
             logo: club.clublogo,
             category: club.category
         }));
@@ -239,7 +241,7 @@ module.exports.search = async function(req, res) {
                 advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
                 officers: 'See details page',
                 banner: club.clubbanner || '/images/placeholder.jpg',
-                logo: club.clublogo || '/images/placeholder.jpg]',
+                logo: club.clublogo || '/images/placeholder.jpg',
                 category: club.category,
                 bigDesc: club.bigdescription,
                 clubinstagram: club.clubinstagram,
