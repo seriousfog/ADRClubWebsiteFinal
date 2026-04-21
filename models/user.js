@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
                 otherKey: 'club_id',
                 timestamps: false
             })
+            User.belongsTo(models.Club, {
+                foreignKey: 'clubin',
+                as: 'club'
+            });
             {
             }
         }
@@ -26,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
         ufirstname: DataTypes.STRING,
         ulastname: DataTypes.STRING,
         password: DataTypes.STRING,
-        role: DataTypes.STRING
+        role: DataTypes.STRING,
+        clubin: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'User',
