@@ -14,9 +14,6 @@ router.get('/', addUserToViews, function (req, res) {
 
 router.get('/clubs/', addUserToViews, clubController.displayAll)
 
-
-// SHINE'S FORM ROUTES
-
 // GET club creation form
 
 router.get('/club/add', addUserToViews, requireLogin, noStudent, noOfficer, teacherPermissions, adminPermissions, clubController.renderAddClubForm);
@@ -26,16 +23,6 @@ router.post('/club/add', addUserToViews, requireLogin, noStudent, noOfficer, tea
 
 // GET individual club page by ID
 router.get('/clubs/:clubId(\\d+)', addUserToViews, clubController.displayClub)
-
-
-
-/*
-// GET club creation form
-router.get('/clubcreate', function(req, res) {
-  res.render('club-create', { title: 'Create New Club' });
-});
-*/
-
 
 // GET officer registration form
 router.get('/registerofficer', requireLogin, addUserToViews, noStudent, noOfficer, teacherPermissions, adminPermissions, function(req, res) {
@@ -67,17 +54,14 @@ router.post('/officers', addUserToViews, noStudent, teacherPermissions, adminPer
 // GET search clubs
 router.get('/search', addUserToViews, clubController.search);
 
-
 // GET edit club form
 router.get('/clubs/:clubId/edit', addUserToViews, requireLogin, noStudent, officerPermissions, teacherPermissions, adminPermissions, clubController.renderEditClub);
 
 // POST update club
 router.post('/clubs/:id/edit', addUserToViews, noStudent, officerPermissions, teacherPermissions, adminPermissions, clubController.updateClub);
 
-
 // POST delete club
 router.post('/clubs/:clubId/delete', addUserToViews, noStudent, adminPermissions, clubController.deleteClub);
-
 
 // POST new club event
 router.post('/clubs/:clubId/event/create', addUserToViews, noStudent, eventController.createEvent);

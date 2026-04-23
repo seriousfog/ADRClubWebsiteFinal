@@ -129,7 +129,8 @@ module.exports.displayClub = async function(req, res, next) {
         res.render('clubs/club', {
             title: club.clubname,
             club: formattedClub,
-            isMember: isMember
+            isMember: isMember,
+            user: req.user
         });
     } catch (error) {
         console.error('Error fetching club:', error);
@@ -141,7 +142,11 @@ module.exports.renderEditClub = async function(req, res) {
 
         const club = await Club.findByPk(req.params.clubId);
         if (!club) return res.status(404).send('Club not found');
-        res.render('clubs/editClub', {title: 'Edit Club', club});
+        res.render('clubs/editClub', {
+            title: 'Edit Club',
+            club,
+            user: req.user
+        });
 };
 
 module.exports.updateClub = async function(req, res) {

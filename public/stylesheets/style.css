@@ -35,7 +35,6 @@ a {
   margin: 10px;
 }
 
-
 .site-name {
   font-family: Georgia, "Times New Roman", Times, serif;
   align-self: center;
@@ -46,7 +45,6 @@ a {
 a, .home-link {
   text-decoration: none;
   color: black;
-
 }
 
 .content {
@@ -74,7 +72,6 @@ a, .home-link {
   border-top: 1px solid grey;
 }
 
-
 .club-top {
   display: flex;
   flex-direction: row;
@@ -86,13 +83,9 @@ a, .home-link {
   padding: 5px;
 }
 
-
-
-
 button.club-card {
   border: none;
 }
-
 
 .club-pic-logo{
   width: 350px;
@@ -117,7 +110,6 @@ button.club-card {
   gap: 10px;
 }
 
-
 .club-bottom {
   display: flex;
   justify-content: center;
@@ -126,8 +118,6 @@ button.club-card {
   margin: 40px auto;
   border-radius: 12px;
 }
-
-
 
 .map{
   width: 700px;
@@ -156,7 +146,6 @@ button.club-card {
   align-items: center;
 }
 
-
 .register {
   display: flex;
   flex-direction: column;
@@ -175,11 +164,10 @@ button.club-card {
   margin: 20px;
   background-color: #f4f4f4;
   border: 1px solid black;
-  justify-content: center; /* Centers horizontally */
-  align-items: center;     /* Centers vertically */
+  justify-content: center;
+  align-items: center;
   padding-bottom: 30px;
   padding-top: 30px;
-
 }
 
 .form-header {
@@ -190,8 +178,6 @@ button.club-card {
 .form-label {
   padding: 10px;
 }
-
-
 
 textarea {
   resize: both;
@@ -264,7 +250,6 @@ textarea {
   font-size: 20px;
 }
 
-
 .right {
   display: flex;
   flex-direction: column;
@@ -272,6 +257,7 @@ textarea {
   width: 50%;
   margin-left: 90px;
 }
+
 .left {
   display: flex;
   flex-direction: column;
@@ -280,9 +266,6 @@ textarea {
   margin-left: 140px;
   margin-right: 100px;
 }
-
-
-
 
 .half {
   display: flex;
@@ -313,7 +296,6 @@ textarea {
   box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px 1px;
   margin: 5px;
   padding: 3px;
-
 }
 
 .club-events-list h2:hover {
@@ -335,9 +317,6 @@ textarea {
   gap: 5px;
   align-items: center;
 }
-
-
-
 
 .button-cancel {
   border: 1px solid black;
@@ -366,9 +345,8 @@ textarea {
   padding: 10px;
 }
 
-
-
 /* HEADER / NAV BAR */
+
 header.main-header {
   margin: 0;
   padding: 0 30px;
@@ -387,12 +365,14 @@ header.main-header {
 }
 
 /* Logo Styling */
+
 header.main-header .logo img {
   height: 60px;
   width: auto;
 }
 
 /* Navigation Links */
+
 nav.main-nav {
   display: flex;
   gap: 30px;
@@ -413,6 +393,7 @@ nav.main-nav a:hover {
 }
 
 /* MAIN CONTENT WRAPPER */
+
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -435,6 +416,7 @@ nav.main-nav a:hover {
 }
 
 /* CLUBS GRID */
+
 .clubs-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -443,6 +425,7 @@ nav.main-nav a:hover {
 }
 
 /* CLUB CARD */
+
 .club-card {
   background: white;
   border-radius: 12px;
@@ -461,6 +444,7 @@ nav.main-nav a:hover {
 }
 
 /* Card Info Section */
+
 .card-info {
   padding: 15px;
   display: flex;
@@ -471,6 +455,7 @@ nav.main-nav a:hover {
 }
 
 /* Card Logo */
+
 .card-logo {
   display: flex;
   justify-content: center;
@@ -486,6 +471,7 @@ nav.main-nav a:hover {
 }
 
 /* Card Text */
+
 .card-info h2 {
   margin: 0;
   font-size: 20px;
@@ -515,6 +501,7 @@ nav.main-nav a:hover {
 }
 
 /* MODAL OVERLAY */
+
 .modal-overlay {
   display: none;
   position: fixed;
@@ -528,6 +515,7 @@ nav.main-nav a:hover {
 }
 
 /* MODAL */
+
 .modal {
   display: none;
   position: fixed;
@@ -546,18 +534,19 @@ nav.main-nav a:hover {
   flex-direction: column;
   align-self: center;
 }
+
 .modal.is-visible {
   display: flex;
 }
 
-
 /* MODAL BANNER - FIXED */
+
 .modal-banner {
   width: 100%;
   max-height: 250px;
   min-height: 120px;
   height: 25vh;
-  background-color: #f5f5f5; /* White/light background for dead space */
+  background-color: #f5f5f5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -568,10 +557,9 @@ nav.main-nav a:hover {
 .modal-banner img {
   width: auto;
   height: 100%;
-  object-fit: contain; /* Shows full image, adds letterboxing if needed */
+  object-fit: contain;
 }
 
-/* To ensure minimum width coverage while maintaining aspect ratio */
 .modal-banner.contain-style img {
   object-fit: contain;
   background-color: #f5f5f5;
@@ -582,6 +570,7 @@ nav.main-nav a:hover {
 }
 
 /* Modal Content */
+
 .modal-content {
   padding: clamp(10px, 2vh, 25px);
   display: flex;
@@ -606,6 +595,7 @@ nav.main-nav a:hover {
 }
 
 /* Close Button */
+
 #close-btn {
   align-self: flex-end;
   cursor: pointer;
@@ -622,6 +612,7 @@ nav.main-nav a:hover {
 }
 
 /* More Info Button */
+
 #modal-more {
   align-self: flex-end;
   margin-top: 15px;
@@ -641,6 +632,7 @@ nav.main-nav a:hover {
 }
 
 /* INDIVIDUAL CLUB PAGE - FIXED LAYOUT */
+
 .club-detail-page {
   min-height: 100vh;
   padding: 20px;
@@ -719,6 +711,7 @@ nav.main-nav a:hover {
 }
 
 /* Officers Section */
+
 .club-officers-section {
   max-width: 1200px;
   margin: 40px auto;
@@ -783,14 +776,13 @@ nav.main-nav a:hover {
   color: #333;
 }
 
-
 .club-officer-card a {
   padding: 5px;
   margin: 5px;
 }
 
-
 /* Info Sections */
+
 .club-info-sections {
   max-width: 1200px;
   margin: 40px auto;
@@ -828,6 +820,7 @@ nav.main-nav a:hover {
 }
 
 /* News Panel (Activities/Opportunities) */
+
 .club-news {
   background-color: #ffffff;
   margin-left: 100px;
@@ -838,7 +831,6 @@ nav.main-nav a:hover {
   display: flex;
   flex-direction: column;
 }
-
 
 @media (max-width: 1600px) {
   .club-side-panel {
@@ -877,9 +869,6 @@ nav.main-nav a:hover {
   flex-direction: row;
   align-items: center;
   gap: 20px;
-}
-
-.club-news-list {
 }
 
 /* Club Events*/
@@ -953,6 +942,7 @@ nav.main-nav a:hover {
 }
 
 /* Popup Styling */
+
 .popup-overlay {
   display: none;
   position: fixed;
@@ -988,7 +978,6 @@ nav.main-nav a:hover {
   color: #333;
 }
 
-
 .popup-overlay {
   display: none;
   position: fixed;
@@ -999,8 +988,8 @@ nav.main-nav a:hover {
   background: rgba(0, 0, 0, 0.5);
 }
 
-
 /* Admin Actions */
+
 .club-admin-actions {
   text-align: center;
   display: flex;
@@ -1043,6 +1032,7 @@ nav.main-nav a:hover {
 }
 
 /* Back Button */
+
 .back-button-container {
   margin-top: 30px;
   text-align: center;
@@ -1070,6 +1060,7 @@ nav.main-nav a:hover {
 }
 
 /* RESPONSIVE DESIGN */
+
 @media (max-width: 768px) {
   header.main-header {
     padding: 0 15px;
@@ -1079,8 +1070,6 @@ nav.main-nav a:hover {
   header.main-header .logo img {
     height: 50px;
   }
-
-
 
   .clubs-container {
     display: grid;
@@ -1099,6 +1088,7 @@ nav.main-nav a:hover {
   }
 
   /* Club Detail Page Mobile */
+
   .club-detail-header {
     flex-direction: column;
     align-items: center;
@@ -1132,10 +1122,8 @@ nav.main-nav a:hover {
   }
 }
 
-
-/* ============================================ */
 /* Shine's Code - KEEPING ORIGINAL STYLES      */
-/* ============================================ */
+
 .club-news {
   background-color: #ffffff;
   margin-left: 100px;
@@ -1147,9 +1135,8 @@ nav.main-nav a:hover {
   flex-direction: column;
 }
 
-
-
 /* Form Display */
+
 .formNews{
   display: none;
 }
@@ -1198,6 +1185,7 @@ header.main-header {
 }
 
 /* Logo Styling */
+
 header.main-header .logo img {
   padding-top: 5px;
   height: 45px;
@@ -1205,6 +1193,7 @@ header.main-header .logo img {
 }
 
 /* Navigation Links */
+
 nav.main-nav {
   display: flex;
   gap: 30px;
@@ -1233,8 +1222,6 @@ nav.main-nav a {
 nav.main-nav a:hover {
   color: white;
 }
-
-
 
 .borderadd {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -1301,6 +1288,7 @@ nav.main-nav a:hover {
   box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px 1px;
   align-items: center;
 }
+
 .user-club {
   display: flex;
   flex-direction: row;

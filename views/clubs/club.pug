@@ -140,9 +140,8 @@ block content
         .club-admin-actions
             a.back-button(href="/") ← Back
 
-            if user && (user.role === "admin" || (user.role === "officer" && user.clubin === club.id))
+            if user && (user.role === "admin" || ((user.role === "officer" || user.role === "teacher") && user.clubin.includes(club.id)))
                 a(href="/clubs/" + club.id + "/edit") Edit Club
 
-    // Pass event data to JavaScript (ONLY ONCE, at the bottom)
     script.
         window.eventsData = !{JSON.stringify(club.clubevents).replace(/</g, '\\u003c')};
