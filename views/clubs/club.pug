@@ -140,7 +140,7 @@ block content
         .club-admin-actions
             a.back-button(href="/") ← Back
 
-            if user && (user.role === "admin" || ((user.role === "officer" || user.role === "teacher") && user.clubin.includes(club.id)))
+            if user && (user.role === "admin" || ((user.role === "officer" || user.role === "teacher") && user.clubin === club.clubid))
                 a(href="/clubs/" + club.id + "/edit") Edit Club
 
     script.

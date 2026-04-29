@@ -106,4 +106,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+
+
+
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const passwordField = document.getElementById("passInput");
+    const toggleBtn = document.getElementById("togglePass");
+
+    // Check if elements exist to avoid errors
+    if (passwordField && toggleBtn) {
+        toggleBtn.addEventListener('change', function() {
+            // Toggle the type based on the checkbox state
+            if (this.checked) {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        });
+    }
 });
