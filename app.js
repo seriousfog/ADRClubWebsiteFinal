@@ -1,4 +1,4 @@
-// Load environment variables first
+//
 require('dotenv').config();
 // app.js - Okay, this is the main setup file. Gotta get the server running.
 // Need these basic Node modules for the server to function:
@@ -8,7 +8,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser'); // If we ever need to use cookies, this is essential
 var logger = require('morgan');
 
-// Bringing in the actual logic files
+//
 var indexRouter = require('./routes/index'); // This will handle the home page ('/')
 var usersRouter = require('./routes/users'); // Placeholder for user-related stuff ('/users')
 const session = require('express-session');
@@ -25,8 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-//Serve static files
-// This line makes everything in 'public' like CSS, JS, images available to the browser.
+//
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
@@ -42,7 +41,7 @@ const {passport} = require('./middleware/passport');
 app.use(passport.initialize());
 app.use(passport.authenticate('session'))
 
-//Routing the requests:
+//
 app.use('/', indexRouter);      // Everything starting with '/' goes to the index route file
 app.use('/users', usersRouter); // Everything starting with '/users' goes to the user route file
 
