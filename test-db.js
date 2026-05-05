@@ -18,14 +18,14 @@ async function testConnection() {
         // Try to query clubinfo if it exists
         if (tables.some(t => t.table_name === 'clubinfo')) {
             const clubs = await sequelize.query('SELECT * FROM clubinfo LIMIT 2');
-            console.log('✅ Sample clubs:', clubs[0]);
+            console.log('Sample clubs:', clubs[0]);
         } else {
-            console.log('❌ clubinfo table does not exist yet!');
+            console.log('clubinfo table does not exist yet!');
         }
 
         await sequelize.close();
     } catch (error) {
-        console.error('❌ Error:', error.message);
+        console.error('Error:', error.message);
     }
 }
 
