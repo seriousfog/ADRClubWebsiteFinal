@@ -93,7 +93,6 @@ router.post('/clubs/:clubId/join/', requireLogin, clubController.joinClub);
 router.get('/clubs/:clubId/leave/:userId', requireLogin, clubController.leaveClub);
 
 
-
 // PERMISSIONS
 
 function addUserToViews(req, res, next) {
