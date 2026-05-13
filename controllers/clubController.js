@@ -101,6 +101,11 @@ module.exports.displayClub = async function(req, res, next) {
             isMember = club.users.some(u => u.id === req.user.id)
         }
 
+        let isAdvisor = false;
+        if (req.user && club.user === "teacher") {
+            isAdvisor = club.user === "teacher".some(u => u.id === req.user.id)
+        }
+
         // Convert to plain object to ensure associations are accessible
         const clubPlain = club.get({ plain: true });
 
@@ -130,6 +135,7 @@ module.exports.displayClub = async function(req, res, next) {
             title: club.clubname,
             club: formattedClub,
             isMember: isMember,
+            isAdvisor: isAdvisor,
             user: req.user
         });
     } catch (error) {
@@ -275,11 +281,8 @@ module.exports.removeOfficerFromClub = async function(req, res) {
 
 
 module.exports.joinClub = async function(req, res) {
-
     const clubId = req.params.clubId;
     const userId = req.user.id;
-
-
 
     await UserClub.create({
         user_id: userId,
@@ -298,4 +301,27 @@ module.exports.leaveClub = async function(req, res) {
         }
     });
     res.redirect(`/clubs/${clubId}`);
+}
+
+module.exports.claimClub = async function(req, res) {
+    const claimId = req.params.claimId;
+    const userId = req.user.id;
+
+    await UserClub.create({
+        user_id: userId,
+        club_id: claimId
+    });
+    res.redirect(`/clubs/${claimId}`);
+}
+
+module.exports.denyClub = async function(req, res) {
+    const { claimId, userId } = req.params;
+
+    await UserClub.destroy({
+        where: {
+            club_id: claimId,
+            user_id: userId,
+        }
+    });
+    res.redirect(`/clubs/${claimId}`);
 }

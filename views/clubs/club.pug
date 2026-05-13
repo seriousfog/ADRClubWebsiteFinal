@@ -29,6 +29,14 @@ block content
                     else
                         form(action=`/clubs/${club.id}/join` method='post')
                             button.button-submit(type="submit") Join Club!
+            if user && user.role === "teacher"
+                .club-admin-actions
+                    if isAdvisor
+                        a.button-cancel(href=`/clubs/${club.id}/denyClub/${user.id}`) Unclaim Club
+                    else
+                        form(action=`/clubs/${club.id}/claim` method='post')
+                            button.button-submit(type="submit") Claim Club
+
 
         .club-officers-section
             h2 Meet the Officers

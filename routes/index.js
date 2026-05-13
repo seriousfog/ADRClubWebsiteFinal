@@ -92,6 +92,8 @@ router.get('/profile/:id(\\d+)', requireLogin, userController.viewUserProfile);
 router.post('/clubs/:clubId/join/', requireLogin, clubController.joinClub);
 router.get('/clubs/:clubId/leave/:userId', requireLogin, clubController.leaveClub);
 
+router.post('/clubs/:clubId/claim/', requireLogin, clubController.claimClub);
+router.get('/clubs/:clubId/unclaim/:userId', requireLogin, clubController.denyClub);
 
 // PERMISSIONS
 

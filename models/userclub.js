@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         club_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+        },
+        claim_id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
         }
     }, {
         sequelize,
