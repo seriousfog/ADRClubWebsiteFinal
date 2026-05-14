@@ -2,15 +2,21 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class UserClub extends Model {
+    class TeacherClaim extends Model {
         static associate(models) {
             // Only define association if model exists
-
+            TeacherClaim.belongsToMany(models.Club, {
+                through: 'teacherclaim',
+                as: 'clubs',
+                foreignKey: 'teacher_id',
+                otherKey: 'club_id',
+                timestamps: false
+            })
         }
     }
 
-    UserClub.init({
-        user_id: {
+    TeacherClaim.init({
+        teacher_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
         },
@@ -20,10 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         sequelize,
-        modelName: 'UserClub',
-        tableName: 'userclubs',
+        modelName: 'TeacherClaim',
+        tableName: 'teacherclaim',
         timestamps: false
     });
 
-    return UserClub;
+    return TeacherClaim;
 };

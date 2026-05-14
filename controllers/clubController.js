@@ -1,4 +1,4 @@
-const {Club, Officer, ClubEvent, News, UserClub, User} = require('../models');
+const {Club, Officer, ClubEvent, News, UserClub, User, TeacherClaim} = require('../models');
 const {Op} = require("sequelize");
 
 
@@ -305,22 +305,22 @@ module.exports.leaveClub = async function(req, res) {
 
 module.exports.claimClub = async function(req, res) {
     const claimId = req.params.claimId;
-    const userId = req.user.id;
+    const teacherId = req.user.id;
 
-    await UserClub.create({
-        user_id: userId,
+    await TeacherClaim.create({
+        teacher_id: teacherId,
         club_id: claimId
     });
     res.redirect(`/clubs/${claimId}`);
 }
 
 module.exports.denyClub = async function(req, res) {
-    const { claimId, userId } = req.params;
+    const { claimId, teacherId } = req.params;
 
-    await UserClub.destroy({
+    await TeacherClaim.destroy({
         where: {
+            teacher_id: teacherId,
             club_id: claimId,
-            user_id: userId,
         }
     });
     res.redirect(`/clubs/${claimId}`);
