@@ -95,6 +95,7 @@ router.get('/clubs/:clubId/leave/:userId', requireLogin, clubController.leaveClu
 router.post('/clubs/:clubId/claim/', requireLogin, clubController.claimClub);
 router.get('/clubs/:clubId/unclaim/:userId', requireLogin, clubController.denyClub);
 
+
 // PERMISSIONS
 
 function addUserToViews(req, res, next) {
