@@ -102,8 +102,8 @@ module.exports.displayClub = async function(req, res, next) {
         }
 
         let isAdvisor = false;
-        if (req.user && club.user === "teacher") {
-            isAdvisor = club.user === "teacher".some(u => u.id === req.user.id)
+        if (req.user && club.users === "teacher") {
+            isAdvisor = club.users === "teacher".some(u => u.id === req.user.id)
         }
 
         // Convert to plain object to ensure associations are accessible
@@ -304,24 +304,25 @@ module.exports.leaveClub = async function(req, res) {
 }
 
 module.exports.claimClub = async function(req, res) {
-    const claimId = req.params.claimId;
+    const clubId = req.params.clubId;
     const teacherId = req.user.id;
 
     await TeacherClaim.create({
         teacher_id: teacherId,
-        club_id: claimId
+        club_id: clubId
     });
-    res.redirect(`/clubs/${claimId}`);
+    res.redirect(`/clubs/${clubId}`);
 }
 
-module.exports.denyClub = async function(req, res) {
-    const { claimId, teacherId } = req.params;
+module.exports.disclaimClub = async function(req, res) {
+    const clubId = req.params.clubId;
+    const teacherId = req.user.id;
 
     await TeacherClaim.destroy({
         where: {
             teacher_id: teacherId,
-            club_id: claimId,
+            club_id: clubId,
         }
     });
-    res.redirect(`/clubs/${claimId}`);
+    res.redirect(`/clubs/${clubId}`);
 }
